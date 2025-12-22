@@ -1,6 +1,6 @@
 ﻿
 
-namespace DalFacade.DO
+namespace DO
 {
     public record Product(int Id, string Name, CATEGORIES Category, double Price, int Quantity)
     {

@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\DalFacade",
+    "\\DalFacade\\DalApi",
+    "\\DalFacade\\DO",
+    "\\DalList",
+    "\\DalTest"
+  ],
+  "SelectedNode": "\\DalList\\DataSource.cs",
+  "PreviewInSolutionExplorer": false
+}

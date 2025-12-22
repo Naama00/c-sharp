@@ -1,6 +1,6 @@
 ﻿
 
-namespace DalFacade.DO;
+namespace DO;
 
 public enum CATEGORIES
 {
