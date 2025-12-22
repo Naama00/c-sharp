@@ -4,14 +4,6 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>Dal</RootNamespace>
   </PropertyGroup>
 
-	<ItemGroup>
-		<InternalsVisibleTo Include="DalTest" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
-	</ItemGroup>
 </Project>
