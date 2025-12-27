@@ -39,4 +39,12 @@ internal class CustomerImplementation : ICustomer
             throw new KeyNotFoundException($"Customer with Id {id} not found.");
         DataSource.Customers.RemoveAt(itemIndex);
     }
+
+    public void PrintAll()
+    {
+        foreach(var customer in DataSource.Customers)
+        {
+            Console.WriteLine(customer?.Id+" "+customer?.CustomerName+" "+customer?.PhoneNumber+" "+customer?.Address);
+        }
+    }
 }

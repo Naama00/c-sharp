@@ -1,4 +1,5 @@
-﻿namespace DO
+﻿
+    namespace DO
 {
     public record Customer(int Id, string CustomerName, string Address, string PhoneNumber)
     {

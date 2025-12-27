@@ -8,6 +8,7 @@ public interface ICrud<T>
     List<T> ReadAll();
     void Update(T item);
     void Delete(int id);
+    void PrintAll();
 }
 
 

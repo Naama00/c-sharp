@@ -38,4 +38,11 @@ internal class ProductImplementation : IProduct
             throw new KeyNotFoundException($"Product with Id {id} not found.");
         DataSource.Products.RemoveAt(itemIndex);
     }
+    public void PrintAll()
+    {
+        foreach (var product in DataSource.Products)
+        {
+            Console.WriteLine(product?.Id + " " + product?.Name + " " + product?.Category + " " + product?.Quantity + " " + product?.Price);
+        }
+    }
 }
