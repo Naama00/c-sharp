@@ -23,8 +23,8 @@ public static class Initialization
 
     private static void CreateCustomers()
     {
-        string[] names = { "Jonathan Veig", "Naama Veig", "Yossi Cohen", "Itamar Levi" };
-        string[] cities = { "New York", "New Jersey", "Jerusalem", "Tel Aviv" };
+        string[] names = { "Jonathan Veig", "Naama Veig","Leah Reiner", "Yossi Cohen", "Itamar Levi" };
+        string[] cities = { "New York", "New Jersey", "Jerusalem", "Tel Aviv","Boltimore" };
 
         for (int i = 0; i < names.Length; i++)
         {
@@ -54,23 +54,17 @@ public static class Initialization
 
     private static void CreateSales()
     {
-        var availableProducts = product?.ReadAll()?.ToList();
-        if (availableProducts == null || !availableProducts.Any()) return;
+        var productsList = product?.ReadAll()?.ToList();
 
-        // רצים או 5 פעמים, או כמספר המוצרים שיש - הנמוך מביניהם
-        int amountToCreate = Math.Min(5, availableProducts.Count);
-
-        for (int i = 0; i < amountToCreate; i++)
+        for (int i = 0; i < productsList?.Count; i++)
         {
-            // עכשיו זה בטוח ב-100% שכל i מייצג מוצר ייחודי וקיים
-            var selectedProduct = availableProducts[i];
 
             sale?.Create(new()
             {
                 Id = DataSource.Config.SaleId,
-                ProductId = selectedProduct.Id,
+                ProductId = productsList[i].Id,
                 RequiredQuantity = i + 1,
-                DiscountedPrice = selectedProduct.Price * 0.8,
+                DiscountedPrice = productsList[i].Price * 0.8,
                 IsForClubMembers = i % 2 == 0,
                 SaleStartDate = DateTime.Now,
                 SaleEndDate = DateTime.Now.AddMonths(1)

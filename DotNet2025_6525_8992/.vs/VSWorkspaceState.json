@@ -1,11 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\DalFacade",
     "\\DalFacade\\DalApi",
-    "\\DalFacade\\DO",
-    "\\DalList",
-    "\\DalTest"
+    "\\DalFacade\\DO"
   ],
+  "SelectedNode": "\\DotNet2025_6525_8992.sln",
   "PreviewInSolutionExplorer": false
 }

@@ -27,7 +27,7 @@ internal class ProductImplementation : IProduct
     {
         int itemIndex=DataSource.Products.FindIndex(p => p?.Id == item.Id);
         if (itemIndex == -1)
-            throw new KeyNotFoundException($"Product with Id {item.Id} not found.");
+            throw new IdNotFoundExcptions($"Product with Id {item.Id} not found.");
         DataSource.Products[itemIndex] = item;
     }
 
@@ -35,7 +35,7 @@ internal class ProductImplementation : IProduct
     {
         int itemIndex= DataSource.Products.FindIndex(p => p?.Id == id);
         if (itemIndex == -1)
-            throw new KeyNotFoundException($"Product with Id {id} not found.");
+            throw new IdNotFoundExcptions($"Product with Id {id} not found.");
         DataSource.Products.RemoveAt(itemIndex);
     }
     public void PrintAll()

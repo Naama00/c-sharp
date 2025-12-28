@@ -2,7 +2,7 @@
 
 namespace DO;
 
-public enum CATEGORIES
+public enum Categories
 {
     DOGS,
     FISH,

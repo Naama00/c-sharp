@@ -28,7 +28,7 @@ internal class CustomerImplementation : ICustomer
     {
         int itemIndex= DataSource.Customers.FindIndex(p => p?.Id == item.Id);
         if (itemIndex == -1)
-            throw new KeyNotFoundException($"Customer with Id {item.Id} not found.");
+            throw new IdNotFoundExcptions($"Customer with Id {item.Id} not found.");
         DataSource.Customers[itemIndex] = item;
     }
 
@@ -36,7 +36,7 @@ internal class CustomerImplementation : ICustomer
     {
         int itemIndex= DataSource.Customers.FindIndex(p => p?.Id == id);
         if (itemIndex == -1)
-            throw new KeyNotFoundException($"Customer with Id {id} not found.");
+            throw new IdNotFoundExcptions($"Customer with Id {id} not found.");
         DataSource.Customers.RemoveAt(itemIndex);
     }
 
