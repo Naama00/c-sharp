@@ -6,20 +6,14 @@ namespace DalTest
 {
     internal class Program
     {
-        private static ISale s_dalSale;
-        private static IProduct s_dalProduct;
-        private static ICustomer s_dalCustomer;
+        private static IDal s_dal = DalList.Instance;
 
         static void Main(string[] args)
         {
             try
-            {
-                s_dalSale = new SaleImplementation();
-                s_dalProduct = new ProductImplementation();
-                s_dalCustomer = new CustomerImplementation();
-
-                Initialization.Initialize(s_dalSale, s_dalCustomer, s_dalProduct);
-
+            {      
+            
+                Initialization.Initialize(s_dal);
                 displayMenu();
             }
             catch (Exception ex)
@@ -101,9 +95,9 @@ namespace DalTest
                 string input = Console.ReadLine() ?? "";
                 switch (input)
                 {
-                    case "1": displaySubMenu("Sales", s_dalSale); break;
-                    case "2": displaySubMenu("Products", s_dalProduct); break;
-                    case "3": displaySubMenu("Customers", s_dalCustomer); break;
+                    case "1": displaySubMenu("Sales", s_dal.Sale); break;
+                    case "2": displaySubMenu("Products", s_dal.Product); break;
+                    case "3": displaySubMenu("Customers", s_dal.Customer); break;
                     case "4": exit = true; break;
                     default: Console.WriteLine("Invalid choice."); break;
                 }

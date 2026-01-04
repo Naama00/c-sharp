@@ -6,16 +6,10 @@ namespace DalTest;
 
 public static class Initialization
 {
-    private static ISale? sale;
-    private static ICustomer? customer;
-    private static IProduct? product;
-
-    public static void Initialize(ISale isale, ICustomer icustomer, IProduct iproduct)
+    private static IDal? s_dal;
+    public static void Initialize(IDal dal)
     {
-        sale = isale;
-        customer = icustomer;
-        product = iproduct;
-
+        s_dal = dal;
         CreateCustomers();
         CreateProducts();
         CreateSales();
@@ -23,12 +17,12 @@ public static class Initialization
 
     private static void CreateCustomers()
     {
-        string[] names = { "Jonathan Veig", "Naama Veig","Leah Reiner", "Yossi Cohen", "Itamar Levi" };
-        string[] cities = { "New York", "New Jersey", "Jerusalem", "Tel Aviv","Boltimore" };
+        string[] names = { "Jonathan Veig", "Naama Veig", "Leah Reiner", "Yossi Cohen", "Itamar Levi" };
+        string[] cities = { "New York", "New Jersey", "Jerusalem", "Tel Aviv", "Boltimore" };
 
         for (int i = 0; i < names.Length; i++)
         {
-            customer?.Create(new()
+            s_dal.Customer?.Create(new()
             {
                 Id = DataSource.Config.CustomerId,
                 CustomerName = names[i],
@@ -45,21 +39,21 @@ public static class Initialization
 
         // יצירת כלבים
         foreach (var name in dogNames)
-            product?.Create(new() { Id = DataSource.Config.ProductId, Name = name, Category = Categories.DOGS, Price = 500, Quantity = 20 });
+           s_dal.Product?.Create(new() { Id = DataSource.Config.ProductId, Name = name, Category = Categories.DOGS, Price = 500, Quantity = 20 });
 
         // יצירת חתולים
         foreach (var name in catNames)
-            product?.Create(new() { Id = DataSource.Config.ProductId, Name = name, Category = Categories.CATS, Price = 350, Quantity = 15 });
+            s_dal.Product?.Create(new() { Id = DataSource.Config.ProductId, Name = name, Category = Categories.CATS, Price = 350, Quantity = 15 });
     }
 
     private static void CreateSales()
     {
-        var productsList = product?.ReadAll()?.ToList();
+        var productsList = s_dal.Product?.ReadAll()?.ToList();
 
         for (int i = 0; i < productsList?.Count; i++)
         {
 
-            sale?.Create(new()
+            s_dal.Sale?.Create(new()
             {
                 Id = DataSource.Config.SaleId,
                 ProductId = productsList[i].Id,
