@@ -11,7 +11,7 @@ internal static class DataSource
     internal class Config
     {
         internal const int minProductId = 100;
-        internal const int minCustomerId = 100;
+        internal const int minCustomerId = 300000000;
         internal const int minSaleId = 100;
 
         internal static int NextProductId = minProductId;

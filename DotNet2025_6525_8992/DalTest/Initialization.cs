@@ -24,7 +24,6 @@ public static class Initialization
         {
             s_dal.Customer?.Create(new()
             {
-                Id = DataSource.Config.CustomerId,
                 CustomerName = names[i],
                 Address = cities[i],
                 PhoneNumber = $"050-412300{i}"
@@ -34,18 +33,114 @@ public static class Initialization
 
     private static void CreateProducts()
     {
-        string[] dogNames = { "Buldog", "Golden Retriever", "Labrador" };
-        string[] catNames = { "Sibirian cat", "Persian cat" };
+        string[] dogNames =
+  {
+    "Bulldog","Golden Retriever","Labrador","Poodle","Beagle",
+    "Rottweiler","German Shepherd","Boxer","Dachshund","Husky",
+    "Doberman","Chihuahua","Pomeranian","Shih Tzu","Cocker Spaniel",
+    "Great Dane","Akita","Maltese","Border Collie","Pitbull"
+};
 
-        // יצירת כלבים
+        string[] catNames =
+        {
+    "Siberian","Persian","Maine Coon","British Shorthair","Bengal",
+    "Ragdoll","Sphynx","Scottish Fold","Abyssinian","Birman",
+    "Russian Blue","Norwegian Forest","Oriental","Himalayan",
+    "Savannah","Balinese","Tonkinese","Manx","Chartreux","Cornish Rex"
+};
+
+        string[] fishNames =
+        {
+    "Goldfish","Guppy","Betta","Angelfish","Molly",
+    "Platy","Tetra","Discus","Oscar","Corydoras",
+    "Neon Tetra","Zebrafish","Swordtail","Koi","Arowana",
+    "Pufferfish","Rainbowfish","Clownfish","Blue Tang","Lionfish"
+};
+
+        string[] parrotNames =
+        {
+    "African Grey","Macaw","Cockatiel","Budgerigar","Amazon Parrot",
+    "Lovebird","Eclectus","Conure","Quaker Parrot","Pionus",
+    "Senegal Parrot","Caique","Rosella","Lorikeet","Ringneck"
+};
+
+        string[] rabbitNames =
+        {
+    "Holland Lop","Netherland Dwarf","Lionhead","Flemish Giant","Mini Rex",
+    "Dutch Rabbit","English Lop","French Lop","Harlequin","Rex",
+    "Californian","Polish","Silver Fox","Chinchilla Rabbit","Havana"
+};
+
+        string[] hamsterNames =
+        {
+    "Syrian Hamster","Dwarf Hamster","Roborovski","Chinese Hamster",
+    "Campbell Hamster","Winter White","Golden Hamster","Black Bear",
+    "Albino Hamster","Long Haired Hamster"
+};
+
+        // DOGS
         foreach (var name in dogNames)
-           s_dal.Product?.Create(new() { Id = DataSource.Config.ProductId, Name = name, Category = Categories.DOGS, Price = 500, Quantity = 20 });
+            s_dal.Product?.Create(new()
+            {
+                Name = name,
+                Category = Categories.DOGS,
+                Price = 500,
+                Quantity = 20
+            });
 
-        // יצירת חתולים
+        // CATS
         foreach (var name in catNames)
-            s_dal.Product?.Create(new() { Id = DataSource.Config.ProductId, Name = name, Category = Categories.CATS, Price = 350, Quantity = 15 });
-    }
+            s_dal.Product?.Create(new()
+            {
+                Name = name,
+                Category = Categories.CATS,
+                Price = 350,
+                Quantity = 15
+            });
 
+        // FISH
+        foreach (var name in fishNames)
+            s_dal.Product?.Create(new()
+            {
+                Id = DataSource.Config.ProductId,
+                Name = name,
+                Category = Categories.FISH,
+                Price = 80,
+                Quantity = 50
+            });
+
+        // PARROTS
+        foreach (var name in parrotNames)
+            s_dal.Product?.Create(new()
+            {
+                Name = name,
+                Category = Categories.PARROTS,
+                Price = 700,
+                Quantity = 10
+            });
+
+        // RABBITS
+        foreach (var name in rabbitNames)
+            s_dal.Product?.Create(new()
+            {
+                Name = name,
+                Category = Categories.RABBITS,
+                Price = 300,
+                Quantity = 12
+            });
+
+        // HUMSTERS
+        foreach (var name in hamsterNames)
+            s_dal.Product?.Create(new()
+            {
+                Name = name,
+                Category = Categories.HUMSTERS,
+                Price = 120,
+                Quantity = 25
+            });
+        
+    }
+    
     private static void CreateSales()
     {
         var productsList = s_dal.Product?.ReadAll()?.ToList();
@@ -55,7 +150,6 @@ public static class Initialization
 
             s_dal.Sale?.Create(new()
             {
-                Id = DataSource.Config.SaleId,
                 ProductId = productsList[i].Id,
                 RequiredQuantity = i + 1,
                 DiscountedPrice = productsList[i].Price * 0.8,

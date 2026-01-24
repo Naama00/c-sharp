@@ -15,28 +15,37 @@ internal class SaleImplementation : ISale
 
     public Sale? Read(int id)
     {
-        Sale item= DataSource.Sales.Find(p => p?.Id == id);
+        Sale item = DataSource.Sales.Find(p => p?.Id == id);
         return item;
     }
 
     public List<Sale?> ReadAll()
     {
-        return DataSource.Sales;
+        return DataSource.Sales.Select(p => p == null ? null : new Sale
+        {
+            Id = p.Id,
+            ProductId = p.ProductId,
+            RequiredQuantity = p.RequiredQuantity,
+            DiscountedPrice = p.DiscountedPrice,
+            IsForClubMembers = p.IsForClubMembers,
+            SaleStartDate = p.SaleStartDate,
+            SaleEndDate = p.SaleEndDate
+        }).ToList();
     }
 
     public void Update(Sale item)
     {
         int itemIndex = DataSource.Sales.FindIndex(p => p?.Id == item.Id);
         if (itemIndex == -1)
-            throw new IdNotFoundExcptions($"Sale with Id {item.Id} not found.");
+            throw new IdNotFoundExcptions(item.Id, "sale");
         DataSource.Sales[itemIndex] = item;
     }
 
     public void Delete(int id)
     {
-        int itemIndex= DataSource.Sales.FindIndex(p => p?.Id == id);
-        if(itemIndex == -1)
-            throw new IdNotFoundExcptions($"Sale with Id {id} not found.");
+        int itemIndex = DataSource.Sales.FindIndex(p => p?.Id == id);
+        if (itemIndex == -1)
+            throw new IdNotFoundExcptions(id, "sale");
         DataSource.Sales.RemoveAt(itemIndex);
     }
 

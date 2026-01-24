@@ -21,14 +21,22 @@ internal class ProductImplementation : IProduct
 
     public List<Product?> ReadAll()
     {
-        return DataSource.Products;
-    }
+            return DataSource.Products.Select(p => p == null ? null : new Product
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Category = p.Category,
+                    Price = p.Price,
+                    Quantity = p.Quantity
+                })
+                .ToList();
+        }
 
     public void Update(Product item)
     {
         int itemIndex=DataSource.Products.FindIndex(p => p?.Id == item.Id);
         if (itemIndex == -1)
-            throw new IdNotFoundExcptions($"Product with Id {item.Id} not found.");
+            throw new IdNotFoundExcptions(item.Id, "product");
         DataSource.Products[itemIndex] = item;
     }
 
@@ -36,7 +44,7 @@ internal class ProductImplementation : IProduct
     {
         int itemIndex= DataSource.Products.FindIndex(p => p?.Id == id);
         if (itemIndex == -1)
-            throw new IdNotFoundExcptions($"Product with Id {id} not found.");
+            throw new IdNotFoundExcptions(id, "product");
         DataSource.Products.RemoveAt(itemIndex);
     }
   
