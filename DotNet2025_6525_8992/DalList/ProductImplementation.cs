@@ -34,9 +34,12 @@ internal class ProductImplementation : IProduct
 
     public void Update(Product item)
     {
-        int itemIndex=DataSource.Products.FindIndex(p => p?.Id == item.Id);
-        if (itemIndex == -1)
-            throw new IdNotFoundExcptions(item.Id, "product");
+        var itemIndex = from product in Products
+                        where product.id = item.id
+                        select item.id;
+
+        if (!itemIndex.any())
+            throw new IdNotFoundExcption(item.Id, "product");
         DataSource.Products[itemIndex] = item;
     }
 
@@ -44,7 +47,7 @@ internal class ProductImplementation : IProduct
     {
         int itemIndex= DataSource.Products.FindIndex(p => p?.Id == id);
         if (itemIndex == -1)
-            throw new IdNotFoundExcptions(id, "product");
+            throw new IdNotFoundExcption(id, "product");
         DataSource.Products.RemoveAt(itemIndex);
     }
   

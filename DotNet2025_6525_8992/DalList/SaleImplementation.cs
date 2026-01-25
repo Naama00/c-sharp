@@ -37,7 +37,7 @@ internal class SaleImplementation : ISale
     {
         int itemIndex = DataSource.Sales.FindIndex(p => p?.Id == item.Id);
         if (itemIndex == -1)
-            throw new IdNotFoundExcptions(item.Id, "sale");
+            throw new IdNotFoundExcption(item.Id, "sale");
         DataSource.Sales[itemIndex] = item;
     }
 
@@ -45,7 +45,7 @@ internal class SaleImplementation : ISale
     {
         int itemIndex = DataSource.Sales.FindIndex(p => p?.Id == id);
         if (itemIndex == -1)
-            throw new IdNotFoundExcptions(id, "sale");
+            throw new IdNotFoundExcption(id, "sale");
         DataSource.Sales.RemoveAt(itemIndex);
     }
 

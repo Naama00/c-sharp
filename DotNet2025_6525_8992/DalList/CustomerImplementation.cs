@@ -31,17 +31,17 @@ internal class CustomerImplementation : ICustomer
 
     public void Update(Customer item)
     {
-        int itemIndex= DataSource.Customers.FindIndex(p => p?.Id == item.Id);
+        var itemIndex= DataSource.Customers.Where(p => p?.Id == item.Id);
         if (itemIndex == -1)
-            throw new IdNotFoundExcptions(item.Id,"customer");
+            throw new IdNotFoundExcption(item.Id,"customer");
         DataSource.Customers[itemIndex] = item;
     }
 
     public void Delete(int id)
     {
-        int itemIndex= DataSource.Customers.FindIndex(p => p?.Id == id);
+        var itemIndex= DataSource.Customers.Where(p => p?.Id == id);
         if (itemIndex == -1)
-            throw new IdNotFoundExcptions(id, "customer");
+            throw new IdNotFoundExcption(id, "customer");
         DataSource.Customers.RemoveAt(itemIndex);
     }
 
