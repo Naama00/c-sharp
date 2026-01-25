@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+namespace DO;
 
-namespace DO
+public class Exceptions
 {
-    class Class1
+    
+    public class AlreadyExistsIdException : Exception
     {
+        public AlreadyExistsIdException(int id, string entity)
+            : base($"The {entity} with ID {id} already exists.") { }
     }
+
+    public class IdNotFoundException : Exception
+    {
+        public IdNotFoundException(int id, string entity) 
+            : base($"The {entity} with ID {id} was not found.") { }
+    }
+
+    
 }
+

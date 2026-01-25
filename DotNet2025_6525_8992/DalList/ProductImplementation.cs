@@ -1,6 +1,7 @@
 ﻿using DalApi;
 using DO;
 using static Dal.DataSource;
+using System.Linq;
 
 namespace Dal;
 
@@ -15,8 +16,7 @@ internal class ProductImplementation : IProduct
 
     public Product? Read(int id)
     {
-        Product item =DataSource.Products.Find(p => p?.Id == id);
-        return item;
+        return DataSource.Products.FirstOrDefault(p => p?.Id == id);
     }
 
     public List<Product?> ReadAll()
@@ -34,21 +34,22 @@ internal class ProductImplementation : IProduct
 
     public void Update(Product item)
     {
-        var itemIndex = from product in Products
-                        where product.id = item.id
-                        select item.id;
+        var oldItem = DataSource.Products.FirstOrDefault(p => p.Id == item.Id);
+        if (oldItem == null)
+            throw new IdNotFoundException(item.Id, "Product");
 
-        if (!itemIndex.any())
-            throw new IdNotFoundExcption(item.Id, "product");
-        DataSource.Products[itemIndex] = item;
+        int index = DataSource.Products.IndexOf(oldItem);
+        DataSource.Products[index] = item;
     }
-
     public void Delete(int id)
     {
-        int itemIndex= DataSource.Products.FindIndex(p => p?.Id == id);
-        if (itemIndex == -1)
-            throw new IdNotFoundExcption(id, "product");
-        DataSource.Products.RemoveAt(itemIndex);
+        if (!DataSource.Products.Any(p => p.Id == id))
+        {
+            throw new IdNotFoundException(id, "Product");
+        }
+        DataSource.Products = DataSource.Products
+                                    .Where(p => p.Id != id)
+                                    .ToList();
     }
-  
+
 }

@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalTest\\DalTest.csproj": {}
+    "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalTest\\DalTest.csproj": {}
   },
   "projects": {
-    "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj": {
+    "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj",
         "projectName": "DalFacade",
-        "projectPath": "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj",
-        "packagesPath": "C:\\Users\\huser\\.nuget\\packages\\",
-        "outputPath": "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalFacade\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalFacade\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\huser\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -51,32 +49,36 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalList\\DalList.csproj": {
+    "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalList\\DalList.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalList\\DalList.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalList\\DalList.csproj",
         "projectName": "DalList",
-        "projectPath": "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalList\\DalList.csproj",
-        "packagesPath": "C:\\Users\\huser\\.nuget\\packages\\",
-        "outputPath": "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalList\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalList\\DalList.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalList\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\huser\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -89,8 +91,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj": {
-                "projectPath": "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj"
+              "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj"
               }
             }
           }
@@ -110,32 +112,36 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalTest\\DalTest.csproj": {
+    "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalTest\\DalTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalTest\\DalTest.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalTest\\DalTest.csproj",
         "projectName": "DalTest",
-        "projectPath": "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalTest\\DalTest.csproj",
-        "packagesPath": "C:\\Users\\huser\\.nuget\\packages\\",
-        "outputPath": "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalTest\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalTest\\DalTest.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\huser\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -148,11 +154,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj": {
-                "projectPath": "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj"
+              "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalFacade\\DalFacade.csproj"
               },
-              "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalList\\DalList.csproj": {
-                "projectPath": "Z:\\יד תשפו\\וייג נעמה\\c#\\cs\\DotNet2025_6525_8992\\DalList\\DalList.csproj"
+              "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalList\\DalList.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\cs\\DotNet2025_6525_8992\\DalList\\DalList.csproj"
               }
             }
           }
@@ -172,11 +178,17 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
