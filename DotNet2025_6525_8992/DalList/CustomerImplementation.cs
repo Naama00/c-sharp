@@ -14,35 +14,54 @@ internal class CustomerImplementation : ICustomer
 
     public Customer? Read(int id)
     {
-        Customer item= DataSource.Customers.Find(p => p?.Id == id);
-        return item;
+        return DataSource.Customers.FirstOrDefault(c => c?.Id == id);
     }
-
-    public List<Customer?> ReadAll()
+    // קריאה של מוצר לפי פילטר
+    public Customer? Read(Func<Customer, bool> filter)
     {
-        return DataSource.Customers.Select(p => p == null ? null : new Customer
-        {
-            Id = p.Id,
-            CustomerName = p.CustomerName,
-            PhoneNumber = p.PhoneNumber,
-            Address = p.Address
-        }).ToList();
+        return DataSource.Customers.FirstOrDefault(c => c != null && filter(c));
     }
+    public List<Customer?> ReadAll(Func<Customer, bool>? filter = null) { 
+        if (filter == null)
+        {
+            return DataSource.Customers.Select(c => c == null ? null : new Customer
+            {
+                Id = c.Id,
+                CustomerName = c.CustomerName,
+                PhoneNumber = c.PhoneNumber,
+                Address = c.Address
+            }).ToList();
+        }
 
+        return DataSource.Customers
+            .Where(c => c != null && filter(c)) 
+            .Select(c => c == null ? null : new Customer
+            {
+                Id = c.Id,
+                CustomerName = c.CustomerName,
+                PhoneNumber = c.PhoneNumber,
+                Address = c.Address
+            }).ToList();
+    }
     public void Update(Customer item)
     {
-        var itemIndex= DataSource.Customers.Where(p => p?.Id == item.Id);
-        if (itemIndex == -1)
-            throw new IdNotFoundExcption(item.Id,"customer");
-        DataSource.Customers[itemIndex] = item;
+        var oldItem = DataSource.Customers.FirstOrDefault(p => p.Id == item.Id);
+        if (oldItem == null)
+            throw new IdNotFoundException(item.Id, "Customer");
+
+        int index = DataSource.Customers.IndexOf(oldItem);
+        DataSource.Customers[index] = item;
     }
 
     public void Delete(int id)
     {
-        var itemIndex= DataSource.Customers.Where(p => p?.Id == id);
-        if (itemIndex == -1)
-            throw new IdNotFoundExcption(id, "customer");
-        DataSource.Customers.RemoveAt(itemIndex);
+        if (!DataSource.Customers.Any(c => c.Id == id))
+        {
+            throw new IdNotFoundException(id, "Customer");
+        }
+        DataSource.Customers = DataSource.Customers
+                                    .Where(p => p.Id != id)
+                                    .ToList();
     }
 
    

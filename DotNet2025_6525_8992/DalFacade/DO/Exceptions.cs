@@ -1,9 +1,7 @@
 ﻿
 namespace DO;
 
-public class Exceptions
-{
-    
+
     public class AlreadyExistsIdException : Exception
     {
         public AlreadyExistsIdException(int id, string entity)
@@ -16,6 +14,4 @@ public class Exceptions
             : base($"The {entity} with ID {id} was not found.") { }
     }
 
-    
-}
-
+  

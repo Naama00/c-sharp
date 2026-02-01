@@ -1,0 +1,5 @@
+﻿  source.cpp
+C:\Users\Admin\Documents\GitHub\cs\Vector\Vector\source.cpp(5,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  Vector.cpp
+  Generating Code...
+  Vector.vcxproj -> C:\Users\Admin\Documents\GitHub\cs\Vector\x64\Debug\Vector.exe

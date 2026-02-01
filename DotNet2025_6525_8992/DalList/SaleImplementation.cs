@@ -18,19 +18,41 @@ internal class SaleImplementation : ISale
         Sale item = DataSource.Sales.Find(p => p?.Id == id);
         return item;
     }
-
-    public List<Sale?> ReadAll()
+    // קריאה של מוצר לפי פילטר
+    public Sale? Read(Func<Sale, bool> filter)
     {
-        return DataSource.Sales.Select(p => p == null ? null : new Sale
+        return DataSource.Sales.FirstOrDefault(s => s != null && filter(s));
+    }
+    public List<Sale?> ReadAll(Func<Sale, bool>? filter = null)
+    {
+        // אם לא נשלח פילטר, נחזיר את כל הרשימה עם מיפוי לאובייקטים חדשים
+        if (filter == null)
         {
-            Id = p.Id,
-            ProductId = p.ProductId,
-            RequiredQuantity = p.RequiredQuantity,
-            DiscountedPrice = p.DiscountedPrice,
-            IsForClubMembers = p.IsForClubMembers,
-            SaleStartDate = p.SaleStartDate,
-            SaleEndDate = p.SaleEndDate
-        }).ToList();
+            return DataSource.Sales.Select(p => p == null ? null : new Sale
+            {
+                Id = p.Id,
+                ProductId = p.ProductId,
+                RequiredQuantity = p.RequiredQuantity,
+                DiscountedPrice = p.DiscountedPrice,
+                IsForClubMembers = p.IsForClubMembers,
+                SaleStartDate = p.SaleStartDate,
+                SaleEndDate = p.SaleEndDate
+            }).ToList();
+        }
+
+        // אם נשלח פילטר, נבצע קודם את הסינון ורק אז את המיפוי
+        return DataSource.Sales
+            .Where(p => p != null && filter(p)) // הסינון מתבצע כאן
+            .Select(p => p == null ? null : new Sale
+            {
+                Id = p.Id,
+                ProductId = p.ProductId,
+                RequiredQuantity = p.RequiredQuantity,
+                DiscountedPrice = p.DiscountedPrice,
+                IsForClubMembers = p.IsForClubMembers,
+                SaleStartDate = p.SaleStartDate,
+                SaleEndDate = p.SaleEndDate
+            }).ToList();
     }
 
     public void Update(Sale item)

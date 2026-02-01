@@ -18,9 +18,15 @@ internal class ProductImplementation : IProduct
     {
         return DataSource.Products.FirstOrDefault(p => p?.Id == id);
     }
-
-    public List<Product?> ReadAll()
+    // קריאה של מוצר לפי פילטר
+    public Product? Read(Func<Product, bool> filter)
     {
+        return DataSource.Products.FirstOrDefault(p => p != null && filter(p));
+    }
+    public List<Product?> ReadAll(Func<Product,bool>? filter = null)
+    {
+        //אם הפילטר ריק תחזיר את כל המוצרים
+        if (filter == null)
             return DataSource.Products.Select(p => p == null ? null : new Product
                 {
                     Id = p.Id,
@@ -30,7 +36,19 @@ internal class ProductImplementation : IProduct
                     Quantity = p.Quantity
                 })
                 .ToList();
-        }
+            return DataSource.Products
+                //סינון המוצרים לפי הפילטר
+                .Where(p => p != null && filter(p))
+                .Select(p => p == null ? null : new Product
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Category = p.Category,
+                    Price = p.Price,
+                    Quantity = p.Quantity
+                })
+                .ToList();
+    }
 
     public void Update(Product item)
     {
@@ -52,4 +70,5 @@ internal class ProductImplementation : IProduct
                                     .ToList();
     }
 
+   
 }
