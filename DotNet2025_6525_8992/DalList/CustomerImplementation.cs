@@ -21,7 +21,8 @@ internal class CustomerImplementation : ICustomer
     {
         return DataSource.Customers.FirstOrDefault(c => c != null && filter(c));
     }
-    public List<Customer?> ReadAll(Func<Customer, bool>? filter = null) { 
+    public List<Customer?> ReadAll(Func<Customer, bool>? filter = null) {
+        //אם הפילטר ריק תחזיר את כל המוצרים
         if (filter == null)
         {
             return DataSource.Customers.Select(c => c == null ? null : new Customer
