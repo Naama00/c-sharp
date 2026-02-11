@@ -14,4 +14,8 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\tools\tools.csproj" />
+	</ItemGroup>
 </Project>

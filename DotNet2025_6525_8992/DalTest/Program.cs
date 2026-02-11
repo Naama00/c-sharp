@@ -1,6 +1,8 @@
 ﻿using Dal;
 using DalApi;
 using DO;
+using tools;
+using System.Reflection;
 
 namespace DalTest
 {
@@ -19,6 +21,8 @@ namespace DalTest
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
+                LogManager.Log(MethodBase.GetCurrentMethod().DeclaringType.FullName,
+                                       MethodBase.GetCurrentMethod().Name, $"Exception: {ex}");
             }
         }
 
@@ -89,7 +93,8 @@ namespace DalTest
                 Console.WriteLine("1. Sales Management");
                 Console.WriteLine("2. Products Management");
                 Console.WriteLine("3. Customers Management");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("4. delete old log files");
+                Console.WriteLine("5. Exit");
                 Console.Write("Select an option: ");
 
                 string input = Console.ReadLine() ?? "";
@@ -98,7 +103,8 @@ namespace DalTest
                     case "1": displaySubMenu("Sales", s_dal.Sale); break;
                     case "2": displaySubMenu("Products", s_dal.Product); break;
                     case "3": displaySubMenu("Customers", s_dal.Customer); break;
-                    case "4": exit = true; break;
+                    case "4": LogManager.deleteOldLogs(); Console.WriteLine("Old log files deleted."); break;
+                    case "5": exit = true; break;
                     default: Console.WriteLine("Invalid choice."); break;
                 }
             }
@@ -162,7 +168,11 @@ namespace DalTest
                                         Console.WriteLine("Updated successfully!");
                                     }
                                 }
-                                catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); }
+                                catch (Exception ex) {
+                                    Console.WriteLine($"Error: {ex.Message}");
+                                    LogManager.Log(MethodBase.GetCurrentMethod().DeclaringType.FullName,
+                                         MethodBase.GetCurrentMethod().Name, $"Exception: {ex}");
+                                }
                             }
                         }
                         break;
@@ -174,7 +184,10 @@ namespace DalTest
                             dal.Delete(int.Parse(Console.ReadLine() ?? "0"));
                             Console.WriteLine("Deleted successfully.");
                         }
-                        catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); }
+                        catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}");
+                            LogManager.Log(MethodBase.GetCurrentMethod().DeclaringType.FullName,
+                                          MethodBase.GetCurrentMethod().Name, $"Exception: {ex}");
+                        }
                         break;
 
                     case "6": backToMain = true; break;

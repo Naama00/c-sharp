@@ -15,3 +15,15 @@ C:\Users\Admin\Documents\GitHub\cs\DotNet2025_6525_8992\DalFacade\obj\Debug\net7
 C:\Users\Admin\Documents\GitHub\cs\DotNet2025_6525_8992\DalFacade\obj\Debug\net7.0\refint\DalFacade.dll
 C:\Users\Admin\Documents\GitHub\cs\DotNet2025_6525_8992\DalFacade\obj\Debug\net7.0\DalFacade.pdb
 C:\Users\Admin\Documents\GitHub\cs\DotNet2025_6525_8992\DalFacade\obj\Debug\net7.0\ref\DalFacade.dll
+C:\Users\Admin\Documents\GitHub\c-sharp\DotNet2025_6525_8992\DalFacade\bin\Debug\net7.0\DalFacade.deps.json
+C:\Users\Admin\Documents\GitHub\c-sharp\DotNet2025_6525_8992\DalFacade\bin\Debug\net7.0\DalFacade.dll
+C:\Users\Admin\Documents\GitHub\c-sharp\DotNet2025_6525_8992\DalFacade\bin\Debug\net7.0\DalFacade.pdb
+C:\Users\Admin\Documents\GitHub\c-sharp\DotNet2025_6525_8992\DalFacade\obj\Debug\net7.0\DalFacade.csproj.AssemblyReference.cache
+C:\Users\Admin\Documents\GitHub\c-sharp\DotNet2025_6525_8992\DalFacade\obj\Debug\net7.0\DalFacade.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Documents\GitHub\c-sharp\DotNet2025_6525_8992\DalFacade\obj\Debug\net7.0\DalFacade.AssemblyInfoInputs.cache
+C:\Users\Admin\Documents\GitHub\c-sharp\DotNet2025_6525_8992\DalFacade\obj\Debug\net7.0\DalFacade.AssemblyInfo.cs
+C:\Users\Admin\Documents\GitHub\c-sharp\DotNet2025_6525_8992\DalFacade\obj\Debug\net7.0\DalFacade.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\GitHub\c-sharp\DotNet2025_6525_8992\DalFacade\obj\Debug\net7.0\DalFacade.dll
+C:\Users\Admin\Documents\GitHub\c-sharp\DotNet2025_6525_8992\DalFacade\obj\Debug\net7.0\refint\DalFacade.dll
+C:\Users\Admin\Documents\GitHub\c-sharp\DotNet2025_6525_8992\DalFacade\obj\Debug\net7.0\DalFacade.pdb
+C:\Users\Admin\Documents\GitHub\c-sharp\DotNet2025_6525_8992\DalFacade\obj\Debug\net7.0\ref\DalFacade.dll
