@@ -8,14 +8,14 @@ namespace DalTest
 {
     internal class Program
     {
-        private static IDal s_dal = DalList.Instance;
+        private static IDal s_dal = DalApi.Factory.Get;
 
         static void Main(string[] args)
         {
             try
             {      
             
-                Initialization.Initialize(s_dal);
+                Initialization.Initialize();
                 displayMenu();
             }
             catch (Exception ex)
