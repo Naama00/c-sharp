@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduct>
+	<Product>
+		<Id>100</Id>
+		<Name>אוגר</Name>
+		<Category>HUMSTERS</Category>
+		<Price>450.5</Price>
+		<Quantity>20</Quantity>
+	</Product>
+	<Product>
+		<Id>101</Id>
+		<Name>Founland big black dog</Name>
+		<Category>DOGS</Category>
+		<Price>2200</Price>
+		<Quantity>5</Quantity>
+	</Product>
+</ArrayOfProduct>

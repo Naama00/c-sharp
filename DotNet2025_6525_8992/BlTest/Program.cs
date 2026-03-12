@@ -14,7 +14,7 @@ namespace BlTest
             try
             {
                
-                //DalTest.Initialization.Initialize();
+                DalTest.Initialization.Initialize();
 
                 DisplayMainMenu();
             }
@@ -25,32 +25,168 @@ namespace BlTest
         }
 
         #region Entity Input Logic (Returns BO Objects)
-        private static BO.Customer InputCustomer(int id = 0)
+        private static BO.Customer InputCustomer(BO.Customer? oldCustomer = null)
         {
-            Console.WriteLine($"\n--- {(id == 0 ? "New" : "Update")} BO Customer Details ---");
-            Console.Write("Name: ");
-            string name = Console.ReadLine() ?? "";
-            Console.Write("Address: ");
-            string addr = Console.ReadLine() ?? "";
-            Console.Write("Phone: ");
-            string phone = Console.ReadLine() ?? "";
+            // אם זה עדכון, נשמור על ה-ID המקורי (שבדרך כלל הוא תעודת זהות בלקוחות)
+            // אם זה לקוח חדש, נקלוט ID מהמשתמש
+            int id;
+            if (oldCustomer == null)
+            {
+                Console.Write("Enter Customer ID (ID number): ");
+                int.TryParse(Console.ReadLine(), out id);
+            }
+            else
+            {
+                id = oldCustomer.Id;
+                Console.WriteLine($"Updating Customer ID: {id}");
+            }
 
-            return new BO.Customer { Id = id, CustomerName = name, Address = addr, PhoneNumber = phone };
+            // 1. קליטת שם
+            Console.Write($"Enter Name (current: '{oldCustomer?.CustomerName}'): ");
+            string nameInput = Console.ReadLine() ?? "";
+            string name = string.IsNullOrWhiteSpace(nameInput) ? (oldCustomer?.CustomerName ?? "") : nameInput;
+
+            // 2. קליטת פלאפון
+            Console.Write($"Enter Phone Number (current: '{oldCustomer?.PhoneNumber}'): ");
+            string phoneInput = Console.ReadLine() ?? "";
+            string phone = string.IsNullOrWhiteSpace(phoneInput) ? (oldCustomer?.PhoneNumber ?? "") : phoneInput;
+
+            // 3. קליטת כתובת
+            Console.Write($"Enter Address (current: '{oldCustomer?.Address}'): ");
+            string addressInput = Console.ReadLine() ?? "";
+            string address = string.IsNullOrWhiteSpace(addressInput) ? (oldCustomer?.Address ?? "") : addressInput;
+
+            return new BO.Customer
+            {
+                Id = id,
+                CustomerName = name,
+                PhoneNumber = phone,
+                Address = address
+            };
         }
 
-        private static BO.Product InputProduct(int id = 0)
+        private static BO.Product InputProduct(BO.Product? oldProduct = null)
         {
-            Console.WriteLine($"\n--- {(id == 0 ? "New" : "Update")} BO Product Details ---");
-            Console.Write("Name: ");
-            string name = Console.ReadLine() ?? "";
-            Console.Write("Category (0-dogs, 1-fish, 2-cats, 3-parrots, 4-rabbits, 5-hamsters): ");
-            BO.Categories cat = (BO.Categories)int.Parse(Console.ReadLine() ?? "0");
-            Console.Write("Price: ");
-            double price = double.Parse(Console.ReadLine() ?? "0");
-            Console.Write("Quantity: ");
-            int qty = int.Parse(Console.ReadLine() ?? "0");
+            // אם אנחנו בעדכון, נשמור על ה-ID המקורי. אם בהוספה, ה-ID יהיה 0.
+            int id = oldProduct?.Id ?? 0;
 
-            return new BO.Product { Id = id, Name = name, Category = cat, Price = price, Quantity = qty };
+            // 1. קליטת שם
+            Console.Write($"Enter Product Name (current: '{oldProduct?.Name}'): ");
+            string nameInput = Console.ReadLine() ?? "";
+            string name = (string.IsNullOrWhiteSpace(nameInput)) ? (oldProduct?.Name ?? "Unknown") : nameInput;
+
+            // 2. קליטת מחיר
+            Console.Write($"Enter Price (current: {oldProduct?.Price}): ");
+            string priceInput = Console.ReadLine() ?? "";
+            double price;
+            if (string.IsNullOrWhiteSpace(priceInput))
+                price = oldProduct?.Price ?? 0;
+            else
+                double.TryParse(priceInput, out price);
+
+            // 3. קליטת כמות
+            Console.Write($"Enter Quantity in stock (current: {oldProduct?.Quantity}): ");
+            string qtyInput = Console.ReadLine() ?? "";
+            int quantity;
+            if (string.IsNullOrWhiteSpace(qtyInput))
+                quantity = oldProduct?.Quantity ?? 0;
+            else
+                int.TryParse(qtyInput, out quantity);
+
+            // 4. קליטת Enum (Category)
+            Console.WriteLine("Choose Category:");
+            // מדפיס למשתמש את האפשרויות: DOGS, FISH, CATS...
+            var categories = Enum.GetValues(typeof(BO.Categories));
+            foreach (var cat in categories)
+            {
+                Console.WriteLine($" - {cat}");
+            }
+
+            Console.Write($"Enter Category (current: {oldProduct?.Category}): ");
+            string catInput = Console.ReadLine() ?? "";
+            BO.Categories category;
+
+            if (string.IsNullOrWhiteSpace(catInput))
+            {
+                category = oldProduct?.Category ?? BO.Categories.DOGS; // ברירת מחדל
+            }
+            else
+            {
+                // מנסה להמיר את הטקסט ל-Enum. אם המשתמש טעה, הוא יקבל את הערך הראשון (DOGS)
+                if (!Enum.TryParse(catInput, true, out category))
+                {
+                    Console.WriteLine("Invalid category, setting to DOGS by default.");
+                    category = BO.Categories.DOGS;
+                }
+            }
+
+            // החזרת האובייקט החדש/מעודכן
+            return new BO.Product
+            {
+                Id = id,
+                Name = name,
+                Price = price,
+                Quantity = quantity,
+                Category = category
+            };
+        }
+        private static BO.Sale InputSale(BO.Sale? oldSale = null)
+        {
+            // שמירה על ה-ID המקורי אם אנחנו בעדכון
+            int id = oldSale?.Id ?? 0;
+
+            // 1. קליטת Product ID
+            Console.Write($"Enter Product ID (current: {oldSale?.ProductId}): ");
+            string prodIdInput = Console.ReadLine() ?? "";
+            int productId = string.IsNullOrWhiteSpace(prodIdInput) ? (oldSale?.ProductId ?? 0) : int.Parse(prodIdInput);
+
+            // 2. קליטת כמות נדרשת
+            Console.Write($"Enter Required Quantity (current: {oldSale?.RequiredQuantity}): ");
+            string qtyInput = Console.ReadLine() ?? "";
+            int requiredQuantity = string.IsNullOrWhiteSpace(qtyInput) ? (oldSale?.RequiredQuantity ?? 0) : int.Parse(qtyInput);
+
+            // 3. קליטת מחיר מבצע
+            Console.Write($"Enter Discounted Price (current: {oldSale?.DiscountedPrice}): ");
+            string priceInput = Console.ReadLine() ?? "";
+            double discountedPrice = string.IsNullOrWhiteSpace(priceInput) ? (oldSale?.DiscountedPrice ?? 0) : double.Parse(priceInput);
+
+            // 4. חברי מועדון (y/n)
+            Console.Write($"Is for Club Members only? (y/n, current: {(oldSale?.IsForClubMembers == true ? "y" : "n")}): ");
+            string clubInput = Console.ReadLine()?.ToLower() ?? "";
+            bool isForClubMembers;
+            if (string.IsNullOrWhiteSpace(clubInput))
+                isForClubMembers = oldSale?.IsForClubMembers ?? false;
+            else
+                isForClubMembers = clubInput == "y";
+
+            // 5. תאריך התחלה
+            Console.Write($"Enter Sale Start Date (yyyy-mm-dd, current: {oldSale?.SaleStartDate:d}): ");
+            string startInput = Console.ReadLine() ?? "";
+            DateTime startDate;
+            if (string.IsNullOrWhiteSpace(startInput))
+                startDate = oldSale?.SaleStartDate ?? DateTime.Now;
+            else
+                DateTime.TryParse(startInput, out startDate);
+
+            // 6. תאריך סיום
+            Console.Write($"Enter Sale End Date (yyyy-mm-dd, current: {oldSale?.SaleEndDate:d}): ");
+            string endInput = Console.ReadLine() ?? "";
+            DateTime endDate;
+            if (string.IsNullOrWhiteSpace(endInput))
+                endDate = oldSale?.SaleEndDate ?? DateTime.Now.AddDays(7);
+            else
+                DateTime.TryParse(endInput, out endDate);
+
+            return new BO.Sale
+            {
+                Id = id,
+                ProductId = productId,
+                RequiredQuantity = requiredQuantity,
+                DiscountedPrice = discountedPrice,
+                IsForClubMembers = isForClubMembers,
+                SaleStartDate = startDate,
+                SaleEndDate = endDate
+            };
         }
         #endregion
 
@@ -95,10 +231,8 @@ namespace BlTest
         }
 
         private static void DisplaySubMenu<T, TInterface>(string entityName, TInterface api)
-            where T : class
+     where T : class
         {
-            // כאן המבנה דומה ל-DalTest, אך הקריאות הן ל-api שקיבלנו מה-BL
-            // לדוגמה עבור Product: api יהיה s_bl.Product
             bool back = false;
             while (!back)
             {
@@ -110,26 +244,104 @@ namespace BlTest
                 {
                     switch (choice)
                     {
-                        case "1":
-                            // שימוש ב-ReadAll של ה-BL (מחזיר BO)
-                            // הערה: תצטרכי להתאים את הקריאה לפי הממשק הספציפי
-                            break;
-                        case "3":
-                            if (typeof(T) == typeof(BO.Product))
+                        case "1": // View All
+                            if (api is BL.BlApi.IProduct productApi)
                             {
-                                var item = InputProduct();
-                                int id = (api as BL.BlApi.IProduct)!.Create(item);
-                                Console.WriteLine($"Created BO Product with ID: {id}");
+                                var items = productApi.ReadAll();
+                                foreach (var item in items) Console.WriteLine(item);
+                            }
+                            else if (api is BL.BlApi.ICustomer customerApi)
+                            {
+                                var items = customerApi.ReadAll();
+                                foreach (var item in items) Console.WriteLine(item);
+                            }
+                            else if (api is BL.BlApi.ISale saleApi)
+                            {
+                                var items = saleApi.ReadAll();
+                                foreach (var item in items) Console.WriteLine(item);
                             }
                             break;
+
+                        case "2": // Get by ID
+                            Console.Write($"Enter {entityName} ID: ");
+                            if (int.TryParse(Console.ReadLine(), out int id))
+                            {
+                                object? found = null;
+                                if (api is BL.BlApi.IProduct pApi) found = pApi.Read(id);
+                                else if (api is BL.BlApi.ICustomer cApi) found = cApi.Read(id);
+                                else if (api is BL.BlApi.ISale sApi) found = sApi.Read(id);
+                                    Console.WriteLine(found ?? "Not found");
+                            }
+                            break;
+
+                        case "3": // Add
+                            if (api is BL.BlApi.IProduct pApiAdd)
+                            {
+                                var item = InputProduct();
+                                int newId = pApiAdd.Create(item);
+                                Console.WriteLine($"Created with ID: {newId}");
+                            }
+                            else if(api is BL.BlApi.ICustomer cApiAdd)
+                            {
+                                var item = InputCustomer();
+                                int newId = cApiAdd.Create(item);
+                                Console.WriteLine($"Created with ID: {newId}");
+                            }
+                            else if (api is BL.BlApi.ISale sApiAdd)
+                            {
+                                var item = InputSale();
+                                int newId = sApiAdd.Create(item);
+                                Console.WriteLine($"Created with ID: {newId}");
+                            }
+                            break;
+                        case "4": // Update
+                            Console.Write($"Enter {entityName} ID to update: ");
+                            if (int.TryParse(Console.ReadLine(), out int updateId))
+                            {
+                                if (api is BL.BlApi.IProduct pApiUpd)
+                                {
+                                    var oldProduct = pApiUpd.Read(updateId);
+                                    Console.WriteLine("Current data: " + oldProduct);
+                                    var updatedProduct = InputProduct(oldProduct); // שולחים את הישן כבסיס
+                                    pApiUpd.Update(updatedProduct);
+                                    Console.WriteLine("Product updated!");
+                                }
+                                else if (api is BL.BlApi.ICustomer cApiUpd)
+                                {
+                                    var oldCustomer = cApiUpd.Read(updateId);
+                                    Console.WriteLine("Current data: " + oldCustomer);
+                                    var updatedCustomer = InputCustomer(oldCustomer); // שולחים את הישן כבסיס
+                                    cApiUpd.Update(updatedCustomer);
+                                    Console.WriteLine("Customer updated!");
+                                }
+                                else if (api is BL.BlApi.ISale sApiUpd)
+                                {
+                                    var oldSale = sApiUpd.Read(updateId);
+                                    Console.WriteLine("Current data: " + oldSale);
+                                    var updatedSale = InputSale(oldSale); // שולחים את הישן כבסיס
+                                    sApiUpd.Update(updatedSale);
+                                    Console.WriteLine("Sale updated!");
+                                }
+                            }
+                            break;
+                        case "5": // Delete
+                            Console.Write($"Enter {entityName} ID to delete: ");
+                            if (int.TryParse(Console.ReadLine(), out int delId))
+                            {
+                                if (api is BL.BlApi.IProduct pApiDel) pApiDel.Delete(delId);
+                                else if (api is BL.BlApi.ICustomer cApiDel) cApiDel.Delete(delId);
+                                else if (api is BL.BlApi.ISale sApiDel) sApiDel.Delete(delId);
+                                Console.WriteLine("Deleted successfully.");
+                            }
+                            break;
+
                         case "6": back = true; break;
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"BL Error: {ex.Message}");
-                    if (ex.InnerException != null)
-                        Console.WriteLine($"Source Error (DAL): {ex.InnerException.Message}");
+                    Console.WriteLine($"Error: {ex.Message}");
+                    if (ex.InnerException != null) Console.WriteLine($"Inner: {ex.InnerException.Message}");
                 }
             }
         }
