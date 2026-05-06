@@ -24,7 +24,11 @@ internal static class Config
     {
         get => GetAndIncrement("NextSaleId");
     }
-
+    // תכונה עבור מספר הזמנה רץ
+    internal static int NextOrderId
+    {
+        get => GetAndIncrement("NextOrderId");
+    }
     /// <summary>
     /// פונקציה שמבצעת את פעולת ה-get המבוקשת: 
     /// קריאה מהקובץ, קידום המספר, שמירה והחזרת הערך.

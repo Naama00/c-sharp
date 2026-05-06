@@ -7,4 +7,5 @@ public interface IBl
     public IProduct Product { get; }
     public ICustomer Customer { get; }
     public ISale Sale { get; }
+    public IOrder Order { get; }
 }

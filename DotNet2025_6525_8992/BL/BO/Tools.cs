@@ -5,6 +5,34 @@ namespace BL.BO;
 
 internal static class Tools
 {
+    // Order conversions
+    public static Order ToBo(this DO.Order d, IEnumerable<DO.OrderItem>? items = null) =>
+        new Order
+        {
+            Id = d.Id,
+            CustomerId = d.CustomerId,
+            OrderDate = d.OrderDate,
+            TotalPrice = d.TotalPrice,
+            // אם הועברו פריטים מה-DAL, נמיר אותם ל-BO
+            Items = items?.Select(i => i.ToBo()).ToList() ?? new List<OrderItem>()
+        };
+
+    public static DO.Order ToDo(this Order b) =>
+        new DO.Order(b.Id, b.CustomerId, b.OrderDate, b.TotalPrice);
+
+    // OrderItem conversions
+    public static OrderItem ToBo(this DO.OrderItem d) =>
+        new OrderItem
+        {
+            ProductId = d.ProductId,
+            ProductName = "", // ניתן לשלוף את השם מה-Product במידת הצורך ב-Service
+            Quantity = d.Quantity,
+            PricePerUnit = d.PricePerUnit
+        };
+
+    // המרה של פריט בודד ל-DO (בדרך כלל דורש גם את ה-OrderId)
+    public static DO.OrderItem ToDo(this OrderItem b, int orderId) =>
+        new DO.OrderItem(orderId, b.ProductId, b.Quantity, b.PricePerUnit);
     // Product conversions
     public static Product ToBo(this DO.Product d) =>
         new Product
@@ -26,11 +54,12 @@ internal static class Tools
             Id = d.Id,
             CustomerName = d.CustomerName,
             Address = d.Address,
-            PhoneNumber = d.PhoneNumber
+            PhoneNumber = d.PhoneNumber,
+            IsClubMember = d.IsClubMember
         };
 
     public static DO.Customer ToDo(this Customer b) =>
-        new DO.Customer(b.Id, b.CustomerName, b.Address, b.PhoneNumber);
+        new DO.Customer(b.Id, b.CustomerName, b.Address, b.PhoneNumber, b.IsClubMember);
 
     // Sale conversions
     public static Sale ToBo(this DO.Sale d) =>
@@ -52,3 +81,4 @@ internal static class Tools
     public static Categories ToBo(this DO.Categories c) => (Categories)c;
     public static DO.Categories ToDo(this Categories c) => (DO.Categories)c;
 }
+

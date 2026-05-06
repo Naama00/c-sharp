@@ -1,7 +1,7 @@
 using System.Xml.Linq;
 using DalApi;
 using DO;
-
+using Dal;
 namespace Dal;
 
 internal class ProductDalXml : IProduct

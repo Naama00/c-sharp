@@ -13,8 +13,8 @@ namespace DalTest
         static void Main(string[] args)
         {
             try
-            {      
-            
+            {
+
                 Initialization.Initialize();
                 displayMenu();
             }
@@ -36,7 +36,10 @@ namespace DalTest
             string addr = Console.ReadLine() ?? "";
             Console.Write("Phone: ");
             string phone = Console.ReadLine() ?? "";
-            return new Customer(id, name, addr, phone);
+            Console.WriteLine("Is Club Member? y/n");
+            string flag = Console.ReadLine() ?? "";
+            bool flag2 = flag == "y" ? true : false;
+            return new Customer(id, name, addr, phone, flag2);
         }
 
         private static Product InputProduct(int id = 0)
@@ -168,7 +171,8 @@ namespace DalTest
                                         Console.WriteLine("Updated successfully!");
                                     }
                                 }
-                                catch (Exception ex) {
+                                catch (Exception ex)
+                                {
                                     Console.WriteLine($"Error: {ex.Message}");
                                     LogManager.Log(MethodBase.GetCurrentMethod().DeclaringType.FullName,
                                          MethodBase.GetCurrentMethod().Name, $"Exception: {ex}");
@@ -184,7 +188,9 @@ namespace DalTest
                             dal.Delete(int.Parse(Console.ReadLine() ?? "0"));
                             Console.WriteLine("Deleted successfully.");
                         }
-                        catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}");
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error: {ex.Message}");
                             LogManager.Log(MethodBase.GetCurrentMethod().DeclaringType.FullName,
                                           MethodBase.GetCurrentMethod().Name, $"Exception: {ex}");
                         }

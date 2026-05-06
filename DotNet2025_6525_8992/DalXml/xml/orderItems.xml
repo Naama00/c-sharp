@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfOrderItem>
+	<OrderItem>
+		<OrderId>1000</OrderId>
+		<ProductId>50</ProductId>
+		<Quantity>2</Quantity>
+		<PricePerUnit>750.25</PricePerUnit>
+	</OrderItem>
+</ArrayOfOrderItem>

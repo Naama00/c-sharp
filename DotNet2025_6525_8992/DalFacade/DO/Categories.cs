@@ -1,7 +1,4 @@
-﻿
-
-namespace DO;
-
+﻿namespace DO;
 public enum Categories
 {
     DOGS,
