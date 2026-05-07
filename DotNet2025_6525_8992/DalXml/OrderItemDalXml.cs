@@ -8,7 +8,7 @@ namespace Dal;
 internal class OrderItemDalXML : IOrderItem
 {
     // שם הקובץ בתיקיית הנתונים
-    readonly string s_orderItems_XML = "orderItems";
+    readonly string s_orderItems_XML = "orderItems.xml";
 
     public int Create(OrderItem item)
     {

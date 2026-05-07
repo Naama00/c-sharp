@@ -6,7 +6,7 @@ namespace Dal;
 
 internal class ProductDalXml : IProduct
 {
-    readonly string s_path = @"xml\products.xml";
+    readonly string s_path = "products.xml";
 
     // עזר להמרת XElement לאובייקט DO.Product
     static Product CreateProductFromElement(XElement p) => new Product
@@ -20,7 +20,15 @@ internal class ProductDalXml : IProduct
 
     public int Create(Product item)
     {
-        XElement root = XElement.Load(s_path);
+        XElement root;
+        if (!File.Exists(s_path))
+        {
+            root = new XElement("Products"); // שם השורש ב-XML שלך
+        }
+        else
+        {
+            root = XElement.Load(s_path);
+        }
         int nextId = Config.ProductId;
 
         XElement p = new XElement("Product",

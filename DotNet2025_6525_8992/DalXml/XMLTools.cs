@@ -8,27 +8,45 @@ internal static class XMLTools
     // הגדרת נתיב התיקייה שבה נשמרים הקבצים
     // המשתנה הזה היה חסר ולכן קיבלת שגיאה
     private static readonly string s_dir = @"..\xml\";
-
     static XMLTools()
     {
-        // בדיקה אם התיקייה קיימת, אם לא - יצירה שלה
-        if (!Directory.Exists(s_dir))
-            Directory.CreateDirectory(s_dir);
+        // בדיקה אם התיקייה קיימת, ואם לא - יצירתה
+        if (!Directory.Exists(@"..\xml\"))
+        {
+            Directory.CreateDirectory(@"..\xml\");
+        }
     }
+    //static XMLTools()
+    //{
+    //    // בדיקה אם התיקייה קיימת, אם לא - יצירה שלה
+    //    if (!Directory.Exists(s_dir))
+    //        Directory.CreateDirectory(s_dir);
+    //}
 
     // שמירת רשימה לקובץ XML
     public static void SaveListToXMLSerializer<T>(List<T?> list, string filePath) where T : class
     {
+        // 1. ניקוי שם הקובץ וסידור הנתיב
+        string filePathClean = filePath.EndsWith(".xml") ? filePath : filePath + ".xml";
+        string dirPath = @"..\xml\";
+        string fullPath = Path.Combine(dirPath, filePathClean);
+
         try
         {
-            // שימוש ב-s_dir לבניית הנתיב המלא
-            using FileStream file = new($"{s_dir}{filePath}.xml", FileMode.Create, FileAccess.Write);
+            // 2. בדיקה קריטית: אם התיקייה לא קיימת - צור אותה עכשיו!
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+
+            // 3. כתיבת הקובץ
+            using FileStream file = new(fullPath, FileMode.Create, FileAccess.Write);
             XmlSerializer serializer = new(typeof(List<T?>));
             serializer.Serialize(file, list);
         }
         catch (Exception ex)
         {
-            throw new Exception($"Failed to save XML file: {filePath}", ex);
+            throw new Exception($"Failed to create file at {fullPath}", ex);
         }
     }
 

@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfOrder>
-	<Order>
-		<Id>1000</Id>
-		<CustomerId>123456789</CustomerId>
-		<OrderDate>2026-02-15T10:30:00</OrderDate>
-		<TotalPrice>1500.5</TotalPrice>
-	</Order>
-</ArrayOfOrder>

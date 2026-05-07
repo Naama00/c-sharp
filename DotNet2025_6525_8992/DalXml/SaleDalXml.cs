@@ -5,7 +5,7 @@ namespace Dal;
 
 internal class SaleDalXML : ISale
 {
-    readonly string s_path = @"XML\sales.XML";
+    readonly string s_path = "sales.xml";
 
     public int Create(Sale item)
     {

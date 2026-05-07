@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfCustomer>
-	<Customer>
-		<Id>300000000</Id>
-		<CustomerName>ישראל ישראלי</CustomerName>
-		<Address>רחוב יפו 1, ירושלים</Address>
-		<PhoneNumber>050-1234567</PhoneNumber>
-	</Customer>
-</ArrayOfCustomer>

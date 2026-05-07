@@ -23,6 +23,7 @@ namespace UI
 
         public OrderForm()
         {
+         
             InitializeComponent();
             LoadInitialData();
             SetupCartGrid();
@@ -82,6 +83,11 @@ namespace UI
         {
             try
             {
+                if (cmbCustomers.SelectedValue == null)
+                {
+                    MessageBox.Show("אנא בחרי לקוח מהרשימה לפני אישור ההזמנה.");
+                    return;
+                }
                 Order newOrder = new Order
                 {
                     CustomerId = (int)cmbCustomers.SelectedValue,

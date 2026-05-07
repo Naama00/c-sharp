@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<dal-config>
-	<dal>xml</dal>
-	<dal-packages>
-		<xml>DalXml</xml>
-		<list>DalList</list>
-	</dal-packages>
-</dal-config>

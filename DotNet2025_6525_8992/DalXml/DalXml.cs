@@ -15,5 +15,7 @@ internal sealed class DalXml : IDal
     public static DalXml Instance => instance;
 
     // בנאי פרטי
-    private DalXml() { }
+    private DalXml() {
+        Initialization.Do(this);
+    }
 }
