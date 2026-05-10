@@ -56,8 +56,11 @@ internal class ProductDalXml : IProduct
 
     public List<Product> ReadAll(Func<Product, bool>? filter = null)
     {
+        if (!File.Exists(s_path)) return new List<Product>();
+
         var list = XElement.Load(s_path).Elements("Product")
-                   .Select(p => CreateProductFromElement(p));
+                           .Select(p => CreateProductFromElement(p));
+
         return filter == null ? list.ToList() : list.Where(filter).ToList();
     }
 

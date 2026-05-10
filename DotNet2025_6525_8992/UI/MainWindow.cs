@@ -72,7 +72,7 @@ namespace UI
                 BackColor = Color.LightCoral,
                 FlatStyle = FlatStyle.Flat
             };
-            btnAdmin.Click += (s, e) => MessageBox.Show("כניסה למנהל מערכת...");
+            btnAdmin.Click += (s, e) => new ProductListForm().Show();
 
             // הוספת הפקדים לטופס
             this.Controls.Add(lblTitle);

@@ -6,22 +6,16 @@ namespace Dal;
 internal static class XMLTools
 {
     // הגדרת נתיב התיקייה שבה נשמרים הקבצים
-    // המשתנה הזה היה חסר ולכן קיבלת שגיאה
-    private static readonly string s_dir = @"..\xml\";
+    private static readonly string s_dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "xml");
     static XMLTools()
     {
         // בדיקה אם התיקייה קיימת, ואם לא - יצירתה
-        if (!Directory.Exists(@"..\xml\"))
+        if (!Directory.Exists(s_dir))
         {
-            Directory.CreateDirectory(@"..\xml\");
+            Directory.CreateDirectory(s_dir);
         }
     }
-    //static XMLTools()
-    //{
-    //    // בדיקה אם התיקייה קיימת, אם לא - יצירה שלה
-    //    if (!Directory.Exists(s_dir))
-    //        Directory.CreateDirectory(s_dir);
-    //}
+ 
 
     // שמירת רשימה לקובץ XML
     public static void SaveListToXMLSerializer<T>(List<T?> list, string filePath) where T : class

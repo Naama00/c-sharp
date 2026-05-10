@@ -15,13 +15,25 @@ public static class Initialization
     {
         s_dal = dal;
 
-        //// בדיקה: אם כבר קיימים מוצרים במערכת, אל תריץ את האתחול שוב (מניעת כפילויות)
-        //if (s_dal.Product.ReadAll().Any())
-        //    return;
+        try
+        {
+            // אם הלקוחות לא קיימים - צור אותם
+            if (!s_dal.Customer.ReadAll().Any())
+                CreateCustomers();
 
-        CreateCustomers();
-        CreateProducts();
-        CreateSales();
+            // אם המוצרים לא קיימים - צור אותם
+            if (!s_dal.Product.ReadAll().Any())
+                CreateProducts();
+
+            // אם המכירות לא קיימות - צור אותן
+            if (!s_dal.Sale.ReadAll().Any())
+                CreateSales();
+        }
+        catch (Exception ex)
+        {
+            // זריקת השגיאה למעלה - ה-UI יתפוס אותה ויציג אותה
+            throw new Exception($"Initialization failed: {ex.Message}", ex);
+        }
     }
 
     private static void CreateCustomers()
@@ -35,7 +47,8 @@ public static class Initialization
             {
                 CustomerName = names[i],
                 Address = cities[i],
-                PhoneNumber = $"050-412300{i}"
+                PhoneNumber = $"050-412300{i}",
+                IsClubMember = i % 2 == 0
             });
         }
     }

@@ -41,8 +41,20 @@ internal class CustomerDalXML : ICustomer
 
     public List<Customer> ReadAll(Func<Customer, bool>? filter = null)
     {
+        // 1. בדיקה אם הקובץ קיים - מונע את הקריסה שראינו בתמונה!
+        if (!File.Exists(s_path))
+        {
+            return new List<Customer>();
+        }
+
+        // 2. טעינת הרשימה מה-XML
         List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(s_path);
-        return filter == null ? customers : customers.Where(filter).ToList();
+
+        // 3. החזרת הרשימה (עם או בלי סינון)
+        if (filter == null)
+            return customers;
+
+        return customers.Where(filter).ToList();
     }
 
     public void Update(Customer item)

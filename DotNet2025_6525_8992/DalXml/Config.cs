@@ -44,7 +44,7 @@ internal static class Config
             XElement? node = root.Element(elementName);
 
             if (node == null)
-                throw new Exception($"האלמנט {elementName} לא נמצא בקובץ הקונפיגורציה.");
+                throw new Exception($"מחפש את: {elementName}. תוכן הקובץ שנטען: {root}");
 
             int currentVal = int.Parse(node.Value);
             int nextVal = currentVal + 1;
