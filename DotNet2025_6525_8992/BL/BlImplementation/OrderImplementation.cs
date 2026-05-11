@@ -128,21 +128,17 @@ internal class OrderImplementation : IOrder
             return p != null && p.Quantity >= item.Quantity;
         });
     }
-
     public List<Order> ReadAllOrders(Func<Order, bool>? filter = null)
     {
         return (from doOrd in _dal.Order.ReadAll()
-                let boOrd = Tools.ToBo(doOrd, _dal.OrderItem.ReadAllByOrder(doOrd.Id))
+                let boOrd = doOrd.ToBo() 
                 where filter == null || filter(boOrd)
                 select boOrd).ToList();
     }
-
     public Order? GetOrderDetails(int orderId)
     {
         var doOrder = _dal.Order.Read(orderId);
         if (doOrder == null) return null;
-        // שליפת הפריטים השייכים להזמנה כדי להחזיר אובייקט BO שלם
-        var items = _dal.OrderItem.ReadAllByOrder(orderId);
-        return Tools.ToBo(doOrder, items);
+        return doOrder.ToBo();
     }
 }

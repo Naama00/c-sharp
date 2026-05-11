@@ -1,9 +1,10 @@
-﻿using DO;
+﻿using Dal;
 using DalApi;
+using DO;
+using System.IO;
+using System.Reflection;
 using System.Xml.Linq;
 using tools;
-using System.Reflection;
-using Dal;
 namespace Dal;
 
 internal class OrderDalXml : IOrder
@@ -41,7 +42,7 @@ internal class OrderDalXml : IOrder
         List<Order?> orders = XMLTools.LoadListFromXMLSerializer<Order>(s_orders_xml);
         return orders.FirstOrDefault(o => o?.Id == id);
     }
-
+  
     public Order? Read(Func<Order, bool> filter)
     {
         List<Order?> orders = XMLTools.LoadListFromXMLSerializer<Order>(s_orders_xml);

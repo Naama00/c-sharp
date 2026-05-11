@@ -119,7 +119,6 @@ namespace UI
 
                 if (order != null)
                 {
-                    MessageBox.Show($"נמצאו {order.Items.Count()} פריטים להזמנה זו");
                     _lblOrderDetails.Text = $"הזמנה מספר: {order.Id}\n" +
                                            $"תאריך: {order.OrderDate:dd/MM/yyyy HH:mm}\n" +                  
                                            $"סה\"כ לתשלום: ₪{order.TotalPrice:N2}";

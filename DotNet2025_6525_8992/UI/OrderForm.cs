@@ -29,6 +29,7 @@ namespace UI
             LoadInitialData();
         }
 
+
         private void InitializeComponentManual()
         {
             // הגדרות חלון ראשי
@@ -157,36 +158,32 @@ namespace UI
         {
             try
             {
+                // 1. שליפת כל המוצרים מה-BL
                 var products = _bl.Product.ReadAll();
 
-                // סינון לפי קטגוריה
+                // 2. בדיקה מה נבחר ב-ComboBox
                 if (cmbCategoryFilter.SelectedItem != null)
                 {
                     string selectedCat = cmbCategoryFilter.SelectedItem.ToString();
+
+                    // סינון רק אם לא נבחר "הכל"
                     if (selectedCat != "הכל")
                     {
+                        // המרה בטוחה מהטקסט של הקומבו לערך ה-Enum
                         products = products.Where(p => p.Category.ToString() == selectedCat).ToList();
                     }
                 }
 
-                // הצגה בטבלה
+                // 3. עדכון הטבלה (חשוב להפוך ל-List בסוף)
                 dgvAvailableProducts.DataSource = products.ToList();
-
-                // שיפור תצוגת הטבלה (אופציונלי)
-                if (dgvAvailableProducts.Columns.Count > 0)
-                {
-                    dgvAvailableProducts.Columns["Id"].HeaderText = "קוד מוצר";
-                    dgvAvailableProducts.Columns["Name"].HeaderText = "שם מוצר";
-                    dgvAvailableProducts.Columns["Price"].HeaderText = "מחיר";
-                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"שגיאה בטעינת מוצרים: {ex.Message}");
+                MessageBox.Show($"שגיאה בסינון מוצרים: {ex.Message}");
             }
         }
 
-        
+
         private void BtnAddToCart_Click(object sender, EventArgs e)
         {
             if (dgvAvailableProducts.SelectedRows.Count > 0)

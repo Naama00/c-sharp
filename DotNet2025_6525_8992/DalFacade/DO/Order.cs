@@ -4,8 +4,9 @@ public record Order(
     int Id,
     int CustomerId,
     DateTime OrderDate,
-    double TotalPrice
+    double TotalPrice,
+    List<OrderItem> Items
 )
 {
-    public Order() : this(0, 0, DateTime.MinValue, 0.0) { }
+    public Order() : this(0, 0, DateTime.MinValue, 0.0, new List<OrderItem>()) { }
 }

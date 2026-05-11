@@ -6,19 +6,25 @@ namespace BL.BO;
 internal static class Tools
 {
     // Order conversions
-    public static Order ToBo(this DO.Order d, IEnumerable<DO.OrderItem>? items = null) =>
+    // Order conversions
+    public static Order ToBo(this DO.Order d) =>
         new Order
         {
             Id = d.Id,
             CustomerId = d.CustomerId,
             OrderDate = d.OrderDate,
             TotalPrice = d.TotalPrice,
-            // אם הועברו פריטים מה-DAL, נמיר אותם ל-BO
-            Items = items?.Select(i => i.ToBo()).ToList() ?? new List<OrderItem>()
+            Items = d.Items?.Select(i => i.ToBo()).ToList() ?? new List<OrderItem>()
         };
 
     public static DO.Order ToDo(this Order b) =>
-        new DO.Order(b.Id, b.CustomerId, b.OrderDate, b.TotalPrice);
+        new DO.Order(
+            b.Id,
+            b.CustomerId,
+            b.OrderDate,
+            b.TotalPrice,
+            b.Items?.Select(i => i.ToDo(b.Id)).ToList() ?? new List<DO.OrderItem>()
+        );
 
     // OrderItem conversions
     public static OrderItem ToBo(this DO.OrderItem d) =>
