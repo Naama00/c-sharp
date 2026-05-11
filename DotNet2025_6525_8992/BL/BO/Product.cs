@@ -13,12 +13,12 @@ public class Product
     public Categories Category { get; set; }
     public double Price { get; set; }
     public int Quantity { get; set; }
-
     public override string ToString() => $@"
     Product ID:    {Id}
     Name:          {Name}
     Category:      {Category}
     Price:         {Price}
     In Stock:      {Quantity}
+    
     ---------------------------";
 }

@@ -116,6 +116,28 @@ internal class SaleImplementation : BL.BlApi.ISale
             throw new BlIdNotFoundException(id, "Sale", ex);
         }
     }
+    public double GetEffectivePrice(int productId, bool isClubMember)
+    {
+        // 1. קבלת מחיר הבסיס של המוצר
+        var product = _dal.Product.Read(productId);
+        double price = product.Price;
+
+        // 2. חיפוש מבצע פעיל עבור המוצר הזה
+        var activeSale = _dal.Sale.ReadAll(s =>
+            s.ProductId == productId &&
+            DateTime.Now >= s.SaleStartDate &&
+            DateTime.Now <= s.SaleEndDate &&
+            (!s.IsForClubMembers || isClubMember) // בדיקה אם המבצע מותנה בחברות מועדון
+        ).FirstOrDefault();
+
+        // 3. אם נמצא מבצע - החזרת המחיר המוזל
+        if (activeSale != null)
+        {
+            return activeSale.DiscountedPrice;
+        }
+
+        return price;
+    }
 
     // --- BL layer exceptions (wrapping DO exceptions) ---
     internal class BlException : Exception

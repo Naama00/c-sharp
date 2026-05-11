@@ -38,6 +38,16 @@ public static class Initialization
 
     private static void CreateCustomers()
     {
+        // הוספת לקוח מזדמן עם פרטים כלליים
+        s_dal!.Customer.Create(new Customer
+        {
+            Id = 0, // או 1, תלוי איך ה-DAL שלך מייצר מזהים אוטומטיים
+            CustomerName = "לקוח מזדמן",
+            Address = "None",
+            PhoneNumber = "000-0000000",
+            IsClubMember = false
+        });
+
         string[] names = { "Jonathan Veig", "Naama Veig", "Leah Reiner", "Yossi Cohen", "Itamar Levi" };
         string[] cities = { "New York", "New Jersey", "Jerusalem", "Tel Aviv", "Baltimore" };
 

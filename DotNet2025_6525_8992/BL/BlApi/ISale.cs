@@ -13,4 +13,5 @@ public interface ISale
     List<Sale> ReadAll(Func<Sale, bool>? filter = null);
     void Update(Sale item);
     void Delete(int id);
+   public double GetEffectivePrice(int productId, bool isClubMember);
 }

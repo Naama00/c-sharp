@@ -34,6 +34,7 @@ namespace UI
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                 BackgroundColor = Color.White
             };
+            dgvProducts.DataBindingComplete += DgvProducts_DataBindingComplete;
 
             // כפתור הוספה
             Button btnAdd = new Button { Text = "➕ הוסף", Location = new Point(20, 500), Size = new Size(100, 40), BackColor = Color.LightGreen };
@@ -50,6 +51,44 @@ namespace UI
                     LoadData();
                 }
             };
+            // כפתור הזמנת מלאי
+            Button btnRestock = new Button
+            {
+                Text = "📦 הזמן מלאי",
+                Location = new Point(350, 500),
+                Size = new Size(120, 40),
+                BackColor = Color.LightSkyBlue,
+                Font = new Font("Segoe UI", 9, FontStyle.Bold)
+            };
+
+            btnRestock.Click += (s, e) => {
+                if (dgvProducts.SelectedRows.Count > 0)
+                {
+                    var p = (Product)dgvProducts.SelectedRows[0].DataBoundItem;
+
+                    // יצירת חלונית קלט פשוטה לבחירת כמות
+                    string input = Microsoft.VisualBasic.Interaction.InputBox($"כמה יחידות להוסיף ל-{p.Name}?", "הזמנת מלאי", "10");
+
+                    if (int.TryParse(input, out int amount) && amount > 0)
+                    {
+                        try
+                        {
+                            p.Quantity += amount; // עדכון הכמות באובייקט
+                            _bl.Product.Update(p); // עדכון ב-BL וב-XML
+                            MessageBox.Show("המלאי עודכן בהצלחה!");
+                            LoadData();
+                        }
+                        catch (Exception ex) { MessageBox.Show(ex.Message); }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("נא לבחור מוצר מהרשימה!");
+                }
+            };
+
+            // אל תשכחי להוסיף אותו ל-Controls
+            this.Controls.Add(btnRestock);
 
             // כפתור מחיקה
             Button btnDelete = new Button { Text = "🗑️ מחק", Location = new Point(240, 500), Size = new Size(100, 40), BackColor = Color.LightCoral };
@@ -76,6 +115,25 @@ namespace UI
 
             this.Controls.AddRange(new Control[] { dgvProducts, btnAdd, btnEdit, btnDelete, btnBack });
         }
+
+
+
+        private void DgvProducts_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvProducts.Rows)
+            {
+                // וודאי שהשדה הוא Quantity כפי שמצאנו קודם
+                if (row.DataBoundItem is Product p && p.Quantity < 5)
+                {
+                    row.DefaultCellStyle.BackColor = Color.MistyRose;
+                    row.DefaultCellStyle.ForeColor = Color.Red;
+                }
+            }
+        }
+
+
+
+
 
         private void LoadData()
         {

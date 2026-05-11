@@ -70,11 +70,13 @@ internal class OrderItemDalXML : IOrderItem
 
     // --- מימוש מתודות ספציפיות מ-IOrderItem ---
 
-    public IEnumerable<OrderItem> ReadAllByOrder(int orderId)
+    public IEnumerable<DO.OrderItem> ReadAllByOrder(int orderId)
     {
-        // שליפת כל הפריטים של הזמנה מסוימת מהקובץ
-        List<OrderItem?> items = XMLTools.LoadListFromXMLSerializer<OrderItem>(s_orderItems_XML);
-        return items.Where(oi => oi != null && oi.OrderId == orderId).Cast<OrderItem>();
+        // טעינת כל הפריטים מהקובץ
+        var allItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>("OrderItem.xml");
+
+        // תיקון: ודאי שההשוואה היא ל-OrderId (השדה המקשר) ולא ל-Id (המזהה של השורה)
+        return allItems.Where(oi => oi != null && oi.OrderId == orderId);
     }
 
     public OrderItem ReadByProductAndOrder(int orderId, int productId)

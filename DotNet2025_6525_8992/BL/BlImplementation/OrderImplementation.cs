@@ -141,7 +141,6 @@ internal class OrderImplementation : IOrder
     {
         var doOrder = _dal.Order.Read(orderId);
         if (doOrder == null) return null;
-
         // שליפת הפריטים השייכים להזמנה כדי להחזיר אובייקט BO שלם
         var items = _dal.OrderItem.ReadAllByOrder(orderId);
         return Tools.ToBo(doOrder, items);

@@ -1,20 +1,14 @@
-using System.Data.SqlTypes;
+using UI;
 
-namespace UI
+ApplicationConfiguration.Initialize();
+
+// יצירת טופס הכניסה
+using (LoginForm login = new LoginForm())
 {
-    internal static class Program
+    // אם המשתמש בחר תפקיד ולחץ על כפתור
+    if (login.ShowDialog() == DialogResult.OK)
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-         
-          
-            ApplicationConfiguration.Initialize();
-            Application.Run(new MainWindow());
-       
-        }
+        // הרצת החלון הראשי עם הפרמטר של האם הוא מנהל
+        Application.Run(new MainWindow(login.IsAdmin));
     }
 }

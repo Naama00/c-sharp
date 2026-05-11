@@ -13,6 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="OrderItemDalXml.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="xml\dal-config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

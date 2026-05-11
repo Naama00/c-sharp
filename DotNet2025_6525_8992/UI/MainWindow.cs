@@ -9,19 +9,44 @@ namespace UI
         // הגדרת הפקדים כמשתני מחלקה
         private Label lblTitle;
         private Button btnNewOrder;
-        private Button btnAdmin;
         private Button btnTrackOrder;
+        private Button btnAdminProducts; // ניהול מוצרים
+        private Button btnCustomers;      // ניהול לקוחות
+        private Button btnSales;          // ניהול מבצעים
 
-        public MainWindow()
+        private bool _isAdminMode;
+
+        public MainWindow(bool isAdmin)
         {
-            InitializeComponentCustom(); // קריאה לפונקציית העיצוב שלנו
+            _isAdminMode = isAdmin;
+            InitializeComponentCustom();
+            ApplyPermissions();
+        }
+
+        private void ApplyPermissions()
+        {
+            if (_isAdminMode)
+            {
+                // מצב מנהל: כפתורי הקופאי/לקוח פעילים, וכפתורי הניהול גלויים
+                btnNewOrder.Enabled = true;
+                btnAdminProducts.Visible = true;
+                btnCustomers.Visible = true;
+                btnSales.Visible = true;
+            }
+            else
+            {
+                // מצב לקוח/קופאי רגיל: מסתירים את כל אפשרויות הניהול
+                btnAdminProducts.Visible = false;
+                btnCustomers.Visible = false;
+                btnSales.Visible = false;
+            }
         }
 
         private void InitializeComponentCustom()
         {
-            // הגדרות הטופס עצמו
+            // הגדרות הטופס
             this.Text = "Pet Store System - Main";
-            this.Size = new Size(450, 500);
+            this.Size = new Size(450, 650); // הגדלתי מעט את הגובה כדי להכיל את כל הכפתורים
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.WhiteSmoke;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -34,17 +59,17 @@ namespace UI
                 Font = new Font("Segoe UI", 22, FontStyle.Bold),
                 TextAlign = ContentAlignment.MiddleCenter,
                 Size = new Size(400, 60),
-                Location = new Point(25, 40),
+                Location = new Point(25, 30),
                 ForeColor = Color.DarkSlateBlue
             };
 
-            // 2. כפתור הזמנה חדשה (ללקוח)
+            // 2. כפתור הזמנה חדשה
             btnNewOrder = new Button
             {
                 Text = "🛒 הזמנה חדשה",
                 Font = new Font("Segoe UI", 14, FontStyle.Bold),
                 Size = new Size(300, 70),
-                Location = new Point(75, 140),
+                Location = new Point(75, 110),
                 BackColor = Color.LightGreen,
                 FlatStyle = FlatStyle.Flat
             };
@@ -56,29 +81,57 @@ namespace UI
                 Text = "🔍 מעקב הזמנה",
                 Font = new Font("Segoe UI", 12),
                 Size = new Size(300, 60),
-                Location = new Point(75, 230),
+                Location = new Point(75, 210),
                 BackColor = Color.LightBlue,
                 FlatStyle = FlatStyle.Flat
             };
             btnTrackOrder.Click += (s, e) => new OrderTrackingForm().ShowDialog();
 
-            // 4. כפתור כניסת מנהל
-            btnAdmin = new Button
+            // --- אזור ניהול (רק למנהל) ---
+
+            // 4. כפתור ניהול מוצרים
+            btnAdminProducts = new Button
             {
-                Text = "⚙️ אזור ניהול",
+                Text = "📦 ניהול מוצרים",
                 Font = new Font("Segoe UI", 12),
                 Size = new Size(300, 60),
-                Location = new Point(75, 320),
+                Location = new Point(75, 300),
                 BackColor = Color.LightCoral,
                 FlatStyle = FlatStyle.Flat
             };
-            btnAdmin.Click += (s, e) => new ProductListForm().Show();
+            btnAdminProducts.Click += (s, e) => new ProductListForm().Show();
+
+            // 5. כפתור ניהול לקוחות
+            btnCustomers = new Button
+            {
+                Text = "👥 ניהול לקוחות",
+                Font = new Font("Segoe UI", 12),
+                Size = new Size(300, 60),
+                Location = new Point(75, 370),
+                BackColor = Color.Khaki,
+                FlatStyle = FlatStyle.Flat
+            };
+            btnCustomers.Click += (s, e) => new CustomerListForm().ShowDialog();
+
+            // 6. כפתור ניהול מבצעים
+            btnSales = new Button
+            {
+                Text = "🏷️ ניהול מבצעים",
+                Font = new Font("Segoe UI", 12),
+                Size = new Size(300, 60),
+                Location = new Point(75, 440),
+                BackColor = Color.LightSkyBlue,
+                FlatStyle = FlatStyle.Flat
+            };
+            btnSales.Click += (s, e) => new SaleListForm().ShowDialog();
 
             // הוספת הפקדים לטופס
             this.Controls.Add(lblTitle);
             this.Controls.Add(btnNewOrder);
             this.Controls.Add(btnTrackOrder);
-            this.Controls.Add(btnAdmin);
+            this.Controls.Add(btnAdminProducts);
+            this.Controls.Add(btnCustomers);
+            this.Controls.Add(btnSales);
         }
     }
 }

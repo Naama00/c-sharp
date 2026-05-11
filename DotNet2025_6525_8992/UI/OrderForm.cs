@@ -49,6 +49,9 @@ namespace UI
             Label lblCartTitle = new Label { Text = "🛒 עגלת הקניות שלך", Location = new Point(30, 70), AutoSize = true, Font = new Font("Segoe UI", 11, FontStyle.Bold), ForeColor = Color.DarkSlateBlue };
             Label lblStoreTitle = new Label { Text = "📦 מוצרים זמינים במלאי", Location = new Point(500, 70), AutoSize = true, Font = new Font("Segoe UI", 11, FontStyle.Bold), ForeColor = Color.DarkSlateBlue };
 
+            //dgvCart.DoubleClick += DgvCart_DoubleClick;
+
+
             // --- טבלאות ---
             dgvCart = new DataGridView
             {
@@ -114,34 +117,31 @@ namespace UI
             });
         }
 
+
         private void LoadInitialData()
         {
             try
             {
-                // 1. ניסיון טעינה
+                // 1. טעינת רשימת הלקוחות הקיימים מה-BL
                 var customerList = _bl.Customer.ReadAll().ToList();
 
-                // 2. אם הרשימה ריקה, נבצע אתחול ונשמור ל-XML
-                if (!customerList.Any())
-                {
-                    // קריאה מפורשת ל-Do עם ה-Instance של ה-XML
-                    Dal.Initialization.Do(Dal.DalXml.Instance);
+                // 2. הוספת "לקוח מזדמן" לראש הרשימה באופן ידני
+                // אנחנו יוצרים אובייקט זמני עם ID 0 שלא קיים ב-XML
+               
 
-                    // טעינה מחדש מהקובץ שזה עתה נוצר בתיקיית ה-xml
-                    customerList = _bl.Customer.ReadAll().ToList();
-                }
-
-                // 3. הצגה ב-UI
+                // 3. הצגת הרשימה (כולל המזדמן) ב-ComboBox
                 if (customerList.Any())
                 {
                     cmbCustomers.DataSource = customerList;
                     cmbCustomers.DisplayMember = "CustomerName";
                     cmbCustomers.ValueMember = "Id";
+
+                    // בחירה ב"לקוח מזדמן" כברירת מחדל (הוא באינדקס 0)
                     cmbCustomers.SelectedIndex = 0;
                 }
                 else
                 {
-                    MessageBox.Show("האתחול בוצע אך הקובץ עדיין ריק. בדקי את פונקציית CreateCustomers.");
+                    MessageBox.Show("שגיאה: רשימת הלקוחות ריקה.");
                 }
 
                 LoadProducts();
@@ -151,6 +151,7 @@ namespace UI
                 MessageBox.Show($"שגיאה: {ex.Message}");
             }
         }
+
 
         private void LoadProducts()
         {
@@ -185,28 +186,46 @@ namespace UI
             }
         }
 
+        
         private void BtnAddToCart_Click(object sender, EventArgs e)
         {
             if (dgvAvailableProducts.SelectedRows.Count > 0)
             {
                 var p = (Product)dgvAvailableProducts.SelectedRows[0].DataBoundItem;
-                var existing = _cart.FirstOrDefault(i => i.ProductId == p.Id);
 
+                // בדיקה האם נשאר מלאי
+                if (p.Quantity <= 0)
+                {
+                    MessageBox.Show("מצטערים, המוצר אזל מהמלאי!", "אזל המלאי", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // הורדת יחידה אחת מהמלאי המוצג בטבלה
+                p.Quantity--;
+
+                var existing = _cart.FirstOrDefault(i => i.ProductId == p.Id);
                 if (existing != null)
                 {
                     existing.Quantity++;
                 }
                 else
                 {
+                    var cust = (Customer)cmbCustomers.SelectedItem;
+                    bool isMember = cust != null && cust.IsClubMember;
+
+                    // קריאה ל-BL לקבלת המחיר הנכון (אחרי הנחה אם יש)
+                    double finalPrice = _bl.Sale.GetEffectivePrice(p.Id, isMember);
                     _cart.Add(new OrderItem
                     {
                         ProductId = p.Id,
                         ProductName = p.Name,
-                        PricePerUnit = p.Price,
+                        PricePerUnit = finalPrice,
                         Quantity = 1
                     });
                 }
+
                 RefreshCart();
+                dgvAvailableProducts.Refresh(); // מעדכן ויזואלית את המספר בטבלה הימנית
             }
         }
 
