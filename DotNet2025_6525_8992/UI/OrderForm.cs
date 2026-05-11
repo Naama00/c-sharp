@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using BL.BlApi;
 using BL.BO;
 using Dal;
-
 namespace UI
 {
     public partial class OrderForm : Form
@@ -119,41 +118,71 @@ namespace UI
         {
             try
             {
-                var customers = _bl.Customer.ReadAll().ToList();
-                MessageBox.Show($"נמצאו {customers.Count} לקוחות במערכת");
+                // 1. ניסיון טעינה
                 var customerList = _bl.Customer.ReadAll().ToList();
-                cmbCustomers.DataSource = customerList;
-                cmbCustomers.DisplayMember = "CustomerName";
-                cmbCustomers.ValueMember = "Id";     // המזהה שישמר מאחורי הקלעים
 
-                // בחירת הלקוח הראשון כברירת מחדל אם הרשימה לא ריקה
-                if (customerList.Any()) cmbCustomers.SelectedIndex = 0;
+                // 2. אם הרשימה ריקה, נבצע אתחול ונשמור ל-XML
+                if (!customerList.Any())
+                {
+                    // קריאה מפורשת ל-Do עם ה-Instance של ה-XML
+                    Dal.Initialization.Do(Dal.DalXml.Instance);
 
-                // 2. טעינת קטגוריות
-                cmbCategoryFilter.Items.Clear(); // ניקוי לפני הוספה
-                cmbCategoryFilter.Items.Add("הכל");
+                    // טעינה מחדש מהקובץ שזה עתה נוצר בתיקיית ה-xml
+                    customerList = _bl.Customer.ReadAll().ToList();
+                }
 
-                // שימוש ב-BO.Category (ודאי שזה השם המדויק של ה-Enum אצלך)
-                cmbCategoryFilter.Items.AddRange(Enum.GetNames(typeof(Categories)));
-                cmbCategoryFilter.SelectedIndex = 0;
+                // 3. הצגה ב-UI
+                if (customerList.Any())
+                {
+                    cmbCustomers.DataSource = customerList;
+                    cmbCustomers.DisplayMember = "CustomerName";
+                    cmbCustomers.ValueMember = "Id";
+                    cmbCustomers.SelectedIndex = 0;
+                }
+                else
+                {
+                    MessageBox.Show("האתחול בוצע אך הקובץ עדיין ריק. בדקי את פונקציית CreateCustomers.");
+                }
 
-                // 3. טעינת המוצרים לטבלה הימנית
                 LoadProducts();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"שגיאה בטעינת הנתונים: {ex.Message}", "שגיאה", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"שגיאה: {ex.Message}");
             }
         }
 
         private void LoadProducts()
         {
-            var products = _bl.Product.ReadAll();
-            string selectedCat = cmbCategoryFilter.SelectedItem.ToString();
-            if (selectedCat != "הכל")
-                products = products.Where(p => p.Category.ToString() == selectedCat).ToList(); 
+            try
+            {
+                var products = _bl.Product.ReadAll();
 
-            dgvAvailableProducts.DataSource = products.ToList();
+                // סינון לפי קטגוריה
+                if (cmbCategoryFilter.SelectedItem != null)
+                {
+                    string selectedCat = cmbCategoryFilter.SelectedItem.ToString();
+                    if (selectedCat != "הכל")
+                    {
+                        products = products.Where(p => p.Category.ToString() == selectedCat).ToList();
+                    }
+                }
+
+                // הצגה בטבלה
+                dgvAvailableProducts.DataSource = products.ToList();
+
+                // שיפור תצוגת הטבלה (אופציונלי)
+                if (dgvAvailableProducts.Columns.Count > 0)
+                {
+                    dgvAvailableProducts.Columns["Id"].HeaderText = "קוד מוצר";
+                    dgvAvailableProducts.Columns["Name"].HeaderText = "שם מוצר";
+                    dgvAvailableProducts.Columns["Price"].HeaderText = "מחיר";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"שגיאה בטעינת מוצרים: {ex.Message}");
+            }
         }
 
         private void BtnAddToCart_Click(object sender, EventArgs e)

@@ -60,7 +60,7 @@ namespace UI
                 BackColor = Color.LightBlue,
                 FlatStyle = FlatStyle.Flat
             };
-            btnTrackOrder.Click += (s, e) => MessageBox.Show("אופציית מעקב הזמנות תתווסף בקרוב!");
+            btnTrackOrder.Click += (s, e) => new OrderTrackingForm().ShowDialog();
 
             // 4. כפתור כניסת מנהל
             btnAdmin = new Button

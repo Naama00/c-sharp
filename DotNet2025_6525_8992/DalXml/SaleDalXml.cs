@@ -5,8 +5,8 @@ namespace Dal;
 
 internal class SaleDalXML : ISale
 {
-    readonly string s_path = "sales.xml";
-
+    
+    readonly string s_path = XMLTools.GetFullPath("sales.xml");
     public int Create(Sale item)
     {
         List<Sale> list = XMLTools.LoadListFromXMLSerializer<Sale>(s_path);

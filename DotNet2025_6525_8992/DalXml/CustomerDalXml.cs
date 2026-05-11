@@ -5,7 +5,7 @@ namespace Dal;
 
 internal class CustomerDalXML : ICustomer
 {
-    readonly string s_path = "customers.xml";
+    readonly string s_path = XMLTools.GetFullPath("customers.xml");
 
     public int Create(Customer item)
     {

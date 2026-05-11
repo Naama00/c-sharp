@@ -6,7 +6,7 @@ namespace Dal;
 
 internal class ProductDalXml : IProduct
 {
-    readonly string s_path = "products.xml";
+    readonly string s_path = XMLTools.GetFullPath("products.xml");
 
     // עזר להמרת XElement לאובייקט DO.Product
     static Product CreateProductFromElement(XElement p) => new Product

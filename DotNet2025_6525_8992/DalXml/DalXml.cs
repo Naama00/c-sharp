@@ -1,7 +1,7 @@
 using DalApi;
 namespace Dal;
 
-internal sealed class DalXml : IDal
+public sealed class DalXml : IDal
 {
     // מימוש התכונות מהממשק IDal 
     public IProduct Product { get; } = new ProductDalXml();
