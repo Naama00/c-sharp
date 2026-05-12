@@ -115,18 +115,18 @@ public static class Initialization
             });
         }
     }
-    private static void CreateOrders()
-    {
-        s_dal!.Order.Create(new Order
-        {
-            Id = 1001,
-            CustomerId = 1002,
-            OrderDate = DateTime.Now,
-            TotalPrice = 500,
-            Items = new List<OrderItem>
-    {
-        new OrderItem { OrderId = 1001, ProductId = 1005, Quantity = 1, PricePerUnit = 500 }
-    }
-        });
-    }
+    //private static void CreateOrders()
+    //{
+    //    s_dal!.Order.Create(new Order
+    //    {
+    //        Id = 1001,
+    //        CustomerId = 1002,
+    //        OrderDate = DateTime.Now,
+    //        TotalPrice = 500,
+    //        Items = new List<OrderItem>
+    //{
+    //    new OrderItem { OrderId = 1001, ProductId = 1005, Quantity = 1, PricePerUnit = 500 }
+    //}
+    //    });
+    //}
 }
