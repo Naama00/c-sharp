@@ -7,7 +7,6 @@ public sealed class DalXml : IDal
     public IProduct Product { get; } = new ProductDalXml();
     public ISale Sale { get; } = new SaleDalXML();
     public ICustomer Customer { get; } = new CustomerDalXML();
-    public IOrderItem OrderItem { get; } = new OrderItemDalXML();
     public IOrder Order { get; } = new OrderDalXml();
 
     // מימוש ה-Singleton שה-Factory שלך מצפה לו

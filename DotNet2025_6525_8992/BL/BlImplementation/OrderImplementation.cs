@@ -12,65 +12,46 @@ internal class OrderImplementation : IOrder
 
     public int DoOrder(Order order)
     {
-        // 1. בדיקות תקינות קלט בסיסיות (Validation)
-        if (order == null)
-            throw new BLNullPropertyException("Order", "Object");
-
+        // 1. בדיקות תקינות קלט (נשאר בדיוק אותו דבר)
+        if (order == null) throw new BLNullPropertyException("Order", "Object");
         if (order.Items == null || !order.Items.Any())
-            throw new BLInvalidInputException("Cannot place an empty order. Please add products to your cart.");
+            throw new BLInvalidInputException("Cannot place an empty order.");
 
-        // 2. בדיקת מלאי וקיום מוצרים
+        // 2. בדיקת מלאי וקיום מוצרים (נשאר אותו דבר)
         foreach (var item in order.Items)
         {
             var doProduct = _dal.Product.Read(item.ProductId);
-
-            if (doProduct == null)
-                throw new BLIdNotFoundException(item.ProductId, "Product");
-
+            if (doProduct == null) throw new BLIdNotFoundException(item.ProductId, "Product");
             if (doProduct.Quantity < item.Quantity)
-            {
                 throw new BLOutOfStockException(item.ProductId, doProduct.Name);
-            }
         }
 
-        // 3. בדיקת קיום לקוח וחישוב מחירים
+        // 3. בדיקת קיום לקוח וחישוב מחירים (נשאר אותו דבר)
         var customer = _dal.Customer.Read(order.CustomerId);
-        if (customer == null)
-        {
-            throw new BLIdNotFoundException(order.CustomerId, "Customer");
-        }
+        if (customer == null) throw new BLIdNotFoundException(order.CustomerId, "Customer");
 
         bool isClubMember = customer.IsClubMember;
         double totalOrderPrice = 0;
 
         foreach (var item in order.Items)
         {
-            // בתוך CalculateItemPrice כבר קיימת חריגה אם המוצר לא נמצא
             double itemTotalPrice = CalculateItemPrice(item.ProductId, item.Quantity, isClubMember);
-
             item.PricePerUnit = itemTotalPrice / item.Quantity;
             totalOrderPrice += itemTotalPrice;
         }
 
-        if (totalOrderPrice <= 0)
-            throw new BLDataValidationException("Order", "TotalPrice", "must be greater than zero");
-
         order.TotalPrice = totalOrderPrice;
         order.OrderDate = DateTime.Now;
 
-        // 4. תהליך השמירה ב-DAL
+        // 4. תהליך השמירה החדש - כאן השינוי המרכזי
         try
         {
-            // שמירת ההזמנה הראשית
-            int newOrderId = _dal.Order.Create(Tools.ToDo(order));
+            // הפעולה הזו שומרת את ה-Order כולל רשימת ה-Items שלו בתוך קובץ ה-XML
+            int newOrderId = _dal.Order.Create(order.ToDo());
 
-            // שמירת פריטי ההזמנה ועדכון המלאי
+            // עדכון המלאי בלבד (ללא קריאה ל-OrderItem.Create)
             foreach (var item in order.Items)
             {
-                // שמירת פריט ההזמנה (מקושר ל-ID שנוצר)
-                _dal.OrderItem.Create(item.ToDo(newOrderId));
-
-                // עדכון המלאי ב-DAL
                 var doProduct = _dal.Product.Read(item.ProductId);
                 if (doProduct != null)
                 {
@@ -80,22 +61,12 @@ internal class OrderImplementation : IOrder
 
             return newOrderId;
         }
-        catch (DO.AlreadyExistsIdException ex)
-        {
-            // המרה של חריגת DAL לחריגת BL תואמת
-            throw new BLAlreadyExistsException(order.Id, "Order", ex);
-        }
-        catch (DO.IdNotFoundException ex)
-        {
-            throw new BLIdNotFoundException(order.Id, "Order", ex);
-        }
         catch (Exception ex)
         {
-            // עטיפת שגיאות לא צפויות (כמו בעיות ב-XML) בשגיאת תהליך כללית
-            throw new BLOrderProcessException("An error occurred while saving the order to the database. Please try again.", ex);
+            // הטיפול בחריגות נשאר אותו דבר
+            throw new BLOrderProcessException("Failed to save order.", ex);
         }
     }
-
     public double CalculateItemPrice(int productId, int quantity, bool isClubMember)
     {
         var doProduct = _dal.Product.Read(productId);

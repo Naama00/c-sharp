@@ -247,7 +247,7 @@ namespace UI
             try
             {
                 var cust = (Customer)cmbCustomers.SelectedItem;
-                _bl.Order.DoOrder(new Order
+               int orderID=_bl.Order.DoOrder(new Order
                 {
                     CustomerId = cust.Id,
                     Items = _cart,
@@ -255,7 +255,7 @@ namespace UI
                     OrderDate = DateTime.Now
                 });
 
-                MessageBox.Show("ההזמנה נקלטה בהצלחה!");
+                MessageBox.Show($"ההזמנה נקלטה בהצלחה! מספר הזמנה: {orderID}");
                 this.Close();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }

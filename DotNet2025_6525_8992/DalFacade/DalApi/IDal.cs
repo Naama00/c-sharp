@@ -8,5 +8,5 @@ public interface IDal
     ICustomer Customer { get; }
     ISale Sale { get; }
     IOrder Order { get; }
-    IOrderItem OrderItem { get; }
+
 }
