@@ -9,7 +9,6 @@ using System.Linq;
 namespace Dal;
 
 internal class OrderItemImplementation
-//: IOrderItem
 {
     // יצירת פריט הזמנה חדש
     public int Create(OrderItem item)
