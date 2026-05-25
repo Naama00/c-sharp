@@ -28,7 +28,7 @@ namespace UI
             if (_isAdminMode)
             {
                 // מצב מנהל: כפתורי הקופאי/לקוח פעילים, וכפתורי הניהול גלויים
-                btnNewOrder.Visible = false;
+                btnNewOrder.Enabled = true;
                 btnAdminProducts.Visible = true;
                 btnCustomers.Visible = true;
                 btnSales.Visible = true;

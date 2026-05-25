@@ -128,7 +128,7 @@ namespace UI
 
                 // 2. הוספת "לקוח מזדמן" לראש הרשימה באופן ידני
                 // אנחנו יוצרים אובייקט זמני עם ID 0 שלא קיים ב-XML
-
+               
 
                 // 3. הצגת הרשימה (כולל המזדמן) ב-ComboBox
                 if (customerList.Any())
@@ -144,13 +144,6 @@ namespace UI
                 {
                     MessageBox.Show("שגיאה: רשימת הלקוחות ריקה.");
                 }
-
-                // --- populate categories into the category filter ComboBox ---
-                // Use enum names so LoadProducts' string comparison works (p.Category.ToString())
-                var categories = Enum.GetNames(typeof(Categories)).ToList();
-                categories.Insert(0, "הכל"); // Hebrew "All" option
-                cmbCategoryFilter.DataSource = categories;
-                cmbCategoryFilter.SelectedIndex = 0;
 
                 LoadProducts();
             }
@@ -254,7 +247,7 @@ namespace UI
             try
             {
                 var cust = (Customer)cmbCustomers.SelectedItem;
-                int orderID = _bl.Order.DoOrder(new Order
+               int orderID=_bl.Order.DoOrder(new Order
                 {
                     CustomerId = cust.Id,
                     Items = _cart,
